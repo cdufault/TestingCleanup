@@ -1,0 +1,1539 @@
+{
+    "portalConfigItemId": "bfff63a6ff1646f2acbf7298b9b17a54",
+    "portalUrl": "https://cigt-srv21.esri.tech/portal",
+    "oauthAppId": "yiztVd6AZ8qPsAnN",
+    "elevationUrl": "https://cigt-srv29.esri.tech/server/rest/services/WorldElevation3D/Terrain3D/ImageServer",
+    "classificationBanner": "UNCLASSIFIED/FOUO (SAMPLE LABEL - NOT DYNAMIC)",
+    "areClassificationMarkingsFake": true,
+    "defaultWebMapId": "76f23087e992442b8d6406bcd7de8301",
+    "defaultWebSceneId": "6898cd8769c948d5b1f83bb196632972",
+    "symbolItemId": "e43465e4a94d41ca94de723a55e9aa17",
+    "outputDebugMessages": true,
+    "panningSpeed": 6,
+    "defaultElevationMode": "relative-to-ground",
+    "immadVersion": "3.6.2",
+    "flashGraphicColor": [255, 0, 0],
+    "gate": {
+        "gateAdminGroupId": "4aa7597a4f7244cc90d63e3bc2b7c03f",
+        "analystComments": "GATE Analyst Comments",
+        "landingPageData": "Activity Snapshot",
+        "regionSummary": "High Interest Items",
+        "j2Assessment": "J2 Regional Assessment",
+        "regionsFClassGuid": "85e88ffd3dcb420b90104aa3639973f6",
+        "landingPageFClassGuid": "738a4317fba34fc6aba814e5bc8de92b",
+        "j2SummaryFClassGuid": "99214ffe177347198edd1177e7de8054",
+        "j2SummaryFields": ["created_date", "j2_summary", "icod", "created_user", "last_edited_date"],
+        "analystCommentsFClassGuid": "087daf542b704cef954623a7ed263b22",
+        "calendarGuid": "5390d36eaa2f48c080ba706a5b8669e3",
+        "sourcesGuid": "1495b8d247f5435d9f568152204cf236",
+        "queryForGateApplication": "type:Application AND typekeywords:'GATE Application AND Config'",
+        "watchConLabel": "WatchCon",
+        "lastUpdatedFieldName": "last_edited_date",
+        "executeCountQueriesSequentially": true,
+        "exercise": {
+            "exRegionsFClassGuid": "e7c21cabd5e54601b3c4c62b9d02e68f",
+            "exLandingPageFClassGuid": "29c6d5d6da394774a9e03d7370c84e44",
+            "exJ2SummaryFClassGuid": "8f7fdb562521476ba5f4b8593f0fcd5b",
+            "exAnalystCommentsFClassGuid": "bd04d3562eb649c981c6192fe1e87696",
+            "exCalendarGuid": "43eded3c13064950b7e0bc8ca365ed2b",
+            "exSourcesGuid": "{GATE_EX_SOURCES_FCLASS_ID}"
+        },
+        "dynamicLayerServiceId": "",
+        "dynamicLayerServicePollIntervalMins": 1,
+        "dynamicLayerServiceDefaultExpirationTimeHrs": 24,
+        "dynamicFeatureServiceTemplate": {
+            "currentVersion": 10.51,
+            "serviceDescription": "GATE Dynamic Layer Service",
+            "hasVersionedData": false,
+            "supportsDisconnectedEditing": false,
+            "hasStaticData": false,
+            "maxRecordCount": 4000,
+            "supportedQueryFormats": "JSON",
+            "supportsVCSProjection": false,
+            "capabilities": "Query,Editing,Create,Update,Delete,Sync",
+            "description": "GATE Dynamic Layer Service",
+            "copyrightText": "",
+            "spatialReference": {
+                "wkid": 4326
+            },
+            "allowGeometryUpdates": true,
+            "units": "esriMeters",
+            "supportsAppend": true,
+            "size": 16384,
+            "syncEnabled": false,
+            "supportsApplyEditsWithGlobalIds": false,
+            "editorTrackingInfo": {
+                "enableEditorTracking": true,
+                "enableOwnershipAccessControl": false,
+                "allowOthersToQuery": true,
+                "allowOthersToUpdate": true,
+                "allowOthersToDelete": false,
+                "allowAnonymousToQuery": true,
+                "allowAnonymousToUpdate": true,
+                "allowAnonymousToDelete": true
+            },
+            "xssPreventionInfo": {
+                "xssPreventionEnabled": true,
+                "xssPreventionRule": "InputOnly",
+                "xssInputRule": "rejectInvalid"
+            },
+            "captureGPS": false,
+            "enableZDefaults": false,
+            "name": "GATEDynamicLayerService"
+        },
+        "dynamicLayerServiceTemplate": {
+            "layers": [
+                {
+                    "currentVersion": 10.51,
+                    "id": 0,
+                    "name": "GATEDynamicLayerService_v1",
+                    "geometryType": "esriGeometryPoint",
+                    "type": "Feature Layer",
+                    "displayField": "OBJECTID",
+                    "description": "GATE Dynamic Layer Service",
+                    "copyrightText": "",
+                    "defaultVisibility": true,
+                    "editingInfo": {
+                        "lastEditDate": null
+                    },
+                    "isDataVersioned": false,
+                    "supportsAppend": true,
+                    "supportsCalculate": true,
+                    "supportsTruncate": true,
+                    "supportsAttachmentsByUploadId": true,
+                    "supportsAttachmentsResizing": true,
+                    "supportsRollbackOnFailureParameter": true,
+                    "supportsStatistics": true,
+                    "supportsAdvancedQueries": true,
+                    "supportsValidateSql": true,
+                    "supportsCoordinatesQuantization": true,
+                    "supportsApplyEditsWithGlobalIds": false,
+                    "supportsMultiScaleGeometry": false,
+                    "hasGeometryProperties": true,
+                    "geometryProperties": {
+                        "shapeLengthFieldName": "Shape__Length",
+                        "units": "esriMeters"
+                    },
+                    "advancedQueryCapabilities": {
+                        "supportsPagination": true,
+                        "supportsPaginationOnAggregatedQueries": true,
+                        "supportsQueryRelatedPagination": true,
+                        "supportsQueryWithDistance": true,
+                        "supportsReturningQueryExtent": true,
+                        "supportsStatistics": true,
+                        "supportsOrderBy": true,
+                        "supportsDistinct": true,
+                        "supportsQueryWithResultType": true,
+                        "supportsSqlExpression": true,
+                        "supportsAdvancedQueryRelated": true,
+                        "supportsCountDistinct": true,
+                        "supportsLod": true,
+                        "supportsReturningGeometryCentroid": false,
+                        "supportsReturningGeometryProperties": true,
+                        "supportsQueryWithDatumTransformation": true,
+                        "supportsHavingClause": true,
+                        "supportsOutFieldSQLExpression": true
+                    },
+                    "useStandardizedQueries": true,
+                    "minScale": 0,
+                    "maxScale": 0,
+                    "extent": {
+                        "xmin": -180.0,
+                        "ymin": -90.0,
+                        "xmax": 180.0,
+                        "ymax": 90.0,
+                        "spatialReference": {
+                            "wkid": 4326
+                        }
+                    },
+                    "allowGeometryUpdates": true,
+                    "hasAttachments": false,
+                    "htmlPopupType": "esriServerHTMLPopupTypeNone",
+                    "hasMetadata": true,
+                    "hasM": false,
+                    "hasZ": false,
+                    "objectIdField": "OBJECTID",
+                    "uniqueIdField": {
+                        "name": "OBJECTID",
+                        "isSystemMaintained": true
+                    },
+                    "fields": [
+                        {
+                            "name": "OBJECTID",
+                            "type": "esriFieldTypeOID",
+                            "alias": "OBJECTID",
+                            "sqlType": "sqlTypeOther",
+                            "nullable": false,
+                            "editable": false,
+                            "domain": null,
+                            "defaultValue": null
+                        },
+                        {
+                            "name": "LAYER_ITEM_ID",
+                            "type": "esriFieldTypeString",
+                            "length": 255,
+                            "alias": "Layer Item ID",
+                            "nullable": true,
+                            "editable": true
+                        },
+                        {
+                            "name": "MISSION_ID",
+                            "type": "esriFieldTypeString",
+                            "length": 255,
+                            "alias": "Mission ID",
+                            "nullable": true,
+                            "editable": true
+                        },
+                        {
+                            "name": "REMOVE_BY_DATE",
+                            "alias": "Remove By Date",
+                            "type": "esriFieldTypeDate",
+                            "nullable": true,
+                            "editable": true
+                        },
+                        {
+                            "name": "LAYER_SYMBOLOGY_2D",
+                            "alias": "Layer 2D Symbology",
+                            "type": "esriFieldTypeString",
+                            "length": 65535,
+                            "nullable": true,
+                            "editable": true
+                        },
+                        {
+                            "name": "LAYER_SYMBOLOGY_3D",
+                            "alias": "Layer 3D Symbology",
+                            "type": "esriFieldTypeString",
+                            "length": 65535,
+                            "nullable": true,
+                            "editable": true
+                        },
+                        {
+                            "name": "DEFAULT_VISIBILITY",
+                            "alias": "Default Visibility",
+                            "type": "esriFieldTypeSmallInteger",
+                            "nullable": false,
+                            "editable": true,
+                            "defaultValue": 1
+                        }
+                    ],
+                    "capabilities": "Query,Editing,Create,Update,Delete,Sync",
+                    "maxRecordCount": 2000,
+                    "supportedQueryFormats": "JSON, geoJSON, PBF",
+                    "indexes": [],
+                    "types": [],
+                    "templates": [],
+                    "globalIdField": "",
+                    "hasStaticData": false
+                }
+            ],
+            "tables": []
+        }
+    },
+    "tags": {
+        "webmap": "immad-webmap",
+        "webscene": "immad-webscene",
+        "group": "immad-group",
+        "user": "immad-user",
+        "webTool": "immad-tool",
+        "gpTool": "immad-tool",
+        "dataFeed": "immad-datafeed",
+        "mission": "immad-mission",
+        "missionData": "immad-mission-data",
+        "application": "immad-application",
+        "tacticalGrid": "tactical-grid",
+        "exerciseFClass": "exercise"
+    },
+    "countWidgetRowColors": ["silver", "darkgray"],
+    "types": {
+        "webMappingApplication": "Web Mapping Application",
+        "application": "Application",
+        "featureService": "Feature Service",
+        "webScene": "Web Scene",
+        "geoprocessingService": "Geoprocessing Service",
+        "webTool": "Web Tool",
+        "webMap": "Web Map"
+    },
+    "typekeywords": {
+        "immadMission": "IMMAD Mission",
+        "gateMission": "GATE Mission",
+        "gateExercise": "GATE Exercise",
+        "immadExercise": "IMMAD Exercise"
+    },
+    "smart": {
+        "getDashboardDataUrl": "https://cigt-srv21.esri.tech/smart/smart_search.json",
+        "getSystemsJsonUrl": "https://cigt-srv21.esri.tech/smart/get_systems.json",
+        "recordUploadUrl": "https://cigt-srv21.esri.tech/smart/uploadRecord",
+        "getRecordByIdUrl": "https://cigt-srv21.esri.tech/smart/getRecordById.json",
+        "useLiveDashboards": true,
+        "runningInCIGT": true,
+        "recordActive": false,
+        "smartRecordUploadRecordIdsParam": "smartRecordUploadRecordIdsParam",
+        "recordActiveFieldName": "record_active",
+        "testDashboardId": "testDashboardId12345",
+        "smartRecordVersionFieldName": "record_version",
+        "smartRadiusFieldName": "record_location_radius",
+        "smartSystemIdFieldName": "system_id",
+        "smartGroupIdFieldName": "group_id",
+        "smartDashboardFieldName": "dashboard_id",
+        "smartRecordIdFieldName": "record_id",
+        "smartRecordTypeFieldName": "record_type",
+        "smartUpdateTrackingIdKey": "update_tracking_id",
+        "smartRecordStatusFromFieldName": "record_status_from",
+        "smartRecordEventDateFieldName": "record_event_date",
+        "smartFormSystemCheckboxLabelFieldName": "record_id",
+        "smartRecordPathFieldName": "record_path",
+        "smartGUID": "guid",
+        "smartSystemRecordType": "system",
+        "smartGroupRecordType": "group",
+        "smartLastUpdatedByFieldName": "last_updated_by",
+        "smartLastUpdatedDateFieldName": "last_updated_date",
+        "useXMLHttpPost": true,
+        "useEncodeURIComponent": false,
+        "updateOnVersionConflict": true,
+        "errorOnVersionConflict": true,
+        "showErrorOnRadiusCalcFailure": true,
+        "nullableFields": ["record_source_date", "record_event_date"],
+        "smartFieldsToNotUpdateWhenUpdatingTheGroup": ["action"],
+        "smartLocationFieldNames": [
+            "record_location_latitude",
+            "record_location_elevation",
+            "record_location_longitude",
+            "record_location_semi_major",
+            "record_location_semi_minor",
+            "record_location_radius",
+            "record_location_orientation"
+        ],
+        "smartExtraSystemFieldsToAddToForm": [
+            {
+                "classification": "Unclassified",
+                "default_value": "update",
+                "name": "action",
+                "order": 0,
+                "title": "Action",
+                "type": "select",
+                "values": "update,modify,update_to_group,final",
+                "required": true
+            }
+        ],
+        "smartUpdatePostParams": [],
+        "mappableFields": [
+            "record_id",
+            "record_location_orient",
+            "record_location_semi_minor",
+            "record_location_semi_major"
+        ],
+        "fetchPostParamsFromConfig": {
+            "method": "POST",
+            "mode": "cors",
+            "body": {},
+            "headers": {
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+            }
+        },
+        "fetchGetParamsFromConfig": {
+            "method": "GET",
+            "mode": "cors",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+        },
+        "fieldsWithNumericValues": [
+            "update_version",
+            "record_version",
+            "timeout_level",
+            "record_location_semi_minor",
+            "record_location_semi_major",
+            "record_location_radius",
+            "record_location_orient",
+            "record_location_longitude_degrees",
+            "record_location_latitude_degrees",
+            "record_location_elevation",
+            "record_location_benumber"
+        ]
+    },
+    "rks": {
+        "integerFields": ["recordCount"],
+        "entityMetaDataUrl": ".../v1/schema/entity",
+        "testSearchUrl": "https://cigt-srv21.esri.tech/rks/entitySearchItems",
+        "detailSearchUrl": ".../v1/entity/details",
+        "entityDetailMetaDataUrl": ".../vi/schema/entity/{entityType}/detail",
+        "operatorGroupSearchUrl": ".../v1/entity/discovery",
+        "runDebug": true,
+        "detailsSearchMaxRecordCount": 10000,
+        "entityDetailsSearch": {
+            "entityId": [],
+            "detailType": [],
+            "elementType": [],
+            "searchOptions": {
+                "sort": "lastUpdated",
+                "order": "desc",
+                "scrollId": "",
+                "size": 300
+            }
+        }
+    },
+    "roles": {
+        "tag": "immad-role",
+        "admin": {
+            "tag": "IMMAD-Admin",
+            "privileges": [
+                "features:user:edit",
+                "portal:admin:assignToGroups",
+                "portal:admin:changeUserRoles",
+                "portal:admin:reassignItems",
+                "portal:admin:updateItemCategorySchema",
+                "portal:admin:viewGroups",
+                "portal:admin:viewItems",
+                "portal:admin:viewUsers",
+                "portal:publisher:publishFeatures",
+                "portal:publisher:publishScenes",
+                "portal:publisher:publishServerGPServices",
+                "portal:publisher:publishServerServices",
+                "portal:publisher:publishTiles",
+                "portal:user:createGroup",
+                "portal:user:createItem",
+                "portal:user:joinGroup",
+                "portal:user:shareGroupToOrg",
+                "portal:user:shareGroupToPublic",
+                "portal:user:shareToGroup",
+                "portal:user:shareToOrg",
+                "portal:user:shareToPublic",
+                "portal:user:viewOrgGroups",
+                "portal:user:viewOrgItems",
+                "portal:user:viewOrgUsers",
+                "premium:publisher:geoanalytics",
+                "premium:publisher:rasteranalysis",
+                "premium:user:geocode",
+                "premium:user:spatialanalysis"
+            ]
+        },
+        "missionManager": {
+            "tag": "IMMAD-MissionManager",
+            "privileges": [
+                "features:user:edit",
+                "portal:admin:assignToGroups",
+                "portal:admin:updateItemCategorySchema",
+                "portal:admin:updateItems",
+                "portal:admin:viewGroups",
+                "portal:admin:viewItems",
+                "portal:admin:viewUsers",
+                "portal:publisher:publishFeatures",
+                "portal:publisher:publishScenes",
+                "portal:publisher:publishServerServices",
+                "portal:publisher:publishDynamicImagery",
+                "portal:user:createGroup",
+                "portal:user:createItem",
+                "portal:user:joinGroup",
+                "portal:user:shareGroupToOrg",
+                "portal:user:shareGroupToPublic",
+                "portal:user:shareToGroup",
+                "portal:user:shareToOrg",
+                "portal:user:shareToPublic",
+                "portal:user:viewOrgGroups",
+                "portal:user:viewOrgItems",
+                "portal:user:viewOrgUsers",
+                "premium:publisher:geoanalytics",
+                "premium:publisher:rasteranalysis",
+                "premium:user:geocode",
+                "premium:user:spatialanalysis"
+            ]
+        },
+        "analyst": {
+            "tag": "IMMAD-Analyst",
+            "privileges": [
+                "features:user:edit",
+                "portal:publisher:publishFeatures",
+                "portal:publisher:publishScenes",
+                "portal:publisher:publishServerServices",
+                "portal:user:createGroup",
+                "portal:user:createItem",
+                "portal:user:joinGroup",
+                "portal:user:shareToGroup",
+                "portal:user:viewOrgGroups",
+                "portal:user:viewOrgItems",
+                "portal:user:viewOrgUsers",
+                "premium:publisher:geoanalytics",
+                "premium:publisher:rasteranalysis",
+                "premium:user:geocode",
+                "premium:user:spatialanalysis"
+            ]
+        }
+    },
+    "analyticCatalog": {
+        "tool_tag": ["immad-gp"]
+    },
+    "portalItemList": {
+        "maxRecordCountWhenPaging": 500,
+        "classifications": [
+            {
+                "name": "UNKNOWN",
+                "backgroundColor": "#F7EA48",
+                "textColor": "#000"
+            },
+            {
+                "name": "UNCLASSIFIED",
+                "backgroundColor": "#007A33",
+                "textColor": "#FFF"
+            },
+            {
+                "name": "CUI",
+                "backgroundColor": "#502B85",
+                "textColor": "#FFF"
+            },
+            {
+                "name": "CONFIDENTIAL",
+                "backgroundColor": "#0033A0",
+                "textColor": "#FFF"
+            },
+            {
+                "name": "SECRET",
+                "backgroundColor": "#C8102E",
+                "textColor": "#FFF"
+            },
+            {
+                "name": "TOP SECRET",
+                "backgroundColor": "#FF671F",
+                "textColor": "#000"
+            },
+            {
+                "name": "SCI",
+                "backgroundColor": "#F7EA48",
+                "textColor": "#000"
+            }
+        ]
+    },
+    "remoteView": {
+        "wsUri": "ws://127.0.0.1:4215",
+        "metadataUrl": "http://localhost:4000/cgi-bin/Extensions/APIQuickReference/GeoLinkConsole/evaljs.html"
+    },
+    "dataFeed": {
+        "queryTypes": [
+            {
+                "name": "Satellite Info",
+                "url": "https://MainRestUrl/sat_info",
+                "geoJsonData": [
+                    {
+                        "title": "Points",
+                        "type": "point",
+                        "fields": [
+                            {
+                                "alias": "start",
+                                "name": "start",
+                                "type": "string"
+                            },
+                            {
+                                "alias": "end",
+                                "name": "end",
+                                "type": "string"
+                            },
+                            {
+                                "alias": "group",
+                                "name": "group",
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Lines",
+                        "type": "polyline",
+                        "fields": [
+                            {
+                                "alias": "start",
+                                "name": "start",
+                                "type": "string"
+                            },
+                            {
+                                "alias": "end",
+                                "name": "end",
+                                "type": "string"
+                            },
+                            {
+                                "alias": "group",
+                                "name": "group",
+                                "type": "string"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Polygons",
+                        "type": "polygon",
+                        "fields": [
+                            {
+                                "alias": "start",
+                                "name": "start",
+                                "type": "string"
+                            },
+                            {
+                                "alias": "end",
+                                "name": "end",
+                                "type": "string"
+                            },
+                            {
+                                "alias": "group",
+                                "name": "group",
+                                "type": "string"
+                            }
+                        ]
+                    }
+                ],
+                "timeInfo": {
+                    "startField": "start",
+                    "endField": "end"
+                },
+                "polygonStyle": {
+                    "stroke": "#00ffff",
+                    "strokeWidth": 1,
+                    "fill": "#00ffff",
+                    "fillOpacity": 0.5
+                },
+                "lineStyle": {
+                    "stroke": "#ff69b4",
+                    "strokeWidth": 1
+                }
+            },
+            {
+                "name": "Image Collection",
+                "url": "https://MainRestUrl/img_col",
+                "timeInfo": {
+                    "startField": "start",
+                    "endField": "end"
+                }
+            }
+        ],
+        "groupNames": [
+            "LANDSAT",
+            "SENTINAL-1",
+            "SENTINAL-2",
+            "NOAA-AERIAL",
+            "Geo-Airbus Defense",
+            "CBERS",
+            "NDVI",
+            "CARTODEM"
+        ]
+    },
+    "settings": {
+        "disableSceneLighting": false,
+        "disableAtmosphere": true
+    },
+    "sketch": {
+        "defaultSymbol": {
+            "size": 10,
+            "color": [255, 255, 255],
+            "outline": {
+                "color": [0, 0, 0],
+                "width": 1
+            }
+        }
+    },
+    "doctrinalTemplate": {
+        "renderer": {
+            "type": "unique-value",
+            "uniqueValueInfos": [
+                {
+                    "label": "Met",
+                    "symbol": {
+                        "type": "simple-fill",
+                        "color": [0, 224, 0]
+                    },
+                    "value": 1
+                },
+                {
+                    "label": "Not Met",
+                    "symbol": {
+                        "type": "simple-fill",
+                        "color": [64, 0, 0]
+                    },
+                    "value": 0
+                }
+            ]
+        }
+    },
+    "remapUrls": true,
+    "urlRemapRules": [
+        {
+            "url": "https://cigt-srv21.esri.tech/server",
+            "remapUrl": "https://cigt-srv21.esri.tech:6443/arcgis"
+        },
+        {
+            "url": "https://cigt-srv21.esri.tech/imageserver",
+            "remapUrl": "https://cigt-47.esri.tech:6443/arcgis"
+        },
+        {
+            "url": "https://{FQDN5}/{WAContext5}",
+            "remapUrl": "https://{FQDN6}/{WAContext6}"
+        }
+    ],
+    "refreshIntervalsInMinutes": [1, 5, 10],
+    "tacticalGrid": {
+        "dataLayerId": "a30d3efb26484ca58fbb64a85a65cb20",
+        "statusField": "eval_status",
+        "recentHighlightTimeoutInMinutes": 1,
+        "refreshIntervalInSeconds": 100800,
+        "stratLeadCompareField": "last_edited_date",
+        "stratLeadExpirationUnitLabel": "hours",
+        "zoomViewScale": 1500000,
+        "stratLeadExpiration": [
+            {
+                "id": "low",
+                "label": "Low",
+                "expirationTime": 4,
+                "color": "#007A33"
+            },
+            {
+                "id": "medium",
+                "label": "Medium",
+                "expirationTime": 8,
+                "color": "#FF671F"
+            },
+            {
+                "id": "high",
+                "label": "High",
+                "expirationTime": 12,
+                "color": "#C8102E"
+            }
+        ],
+        "stratLeadMaxExpiration": 100,
+        "maximumSelectedRowsAllowed": 10,
+        "defaultFieldMappings": [
+            {
+                "tacticalGridFieldName": "exercise",
+                "systemFieldName": "exercise"
+            },
+            {
+                "tacticalGridFieldName": "record_id",
+                "systemFieldName": "record_id"
+            },
+            {
+                "tacticalGridFieldName": "record_location_semi_major",
+                "systemFieldName": "record_location_semi_major",
+                "ellipseRole": "semi-major",
+                "ellipseUnit": "miles"
+            },
+            {
+                "tacticalGridFieldName": "record_location_semi_minor",
+                "systemFieldName": "record_location_semi_minor",
+                "ellipseRole": "semi-minor",
+                "ellipseUnit": "miles"
+            },
+            {
+                "tacticalGridFieldName": "record_location_orient",
+                "systemFieldName": "record_location_orient",
+                "ellipseRole": "azimuth"
+            }
+        ],
+        "quickFilters": [
+            {
+                "id": "clear",
+                "label": "Clear Filter",
+                "value": "clear"
+            },
+            {
+                "id": "last_thirty_minutes",
+                "label": "Last 30 Minutes",
+                "value": "last_edited_date > CURRENT_TIMESTAMP - INTERVAL '30' MINUTE"
+            },
+            {
+                "id": "last_hour",
+                "label": "Last Hour",
+                "value": "last_edited_date > CURRENT_TIMESTAMP - INTERVAL '1' HOUR"
+            },
+            {
+                "id": "last_two_hours",
+                "label": "Last Two Hours",
+                "value": "last_edited_date > CURRENT_TIMESTAMP - INTERVAL '2' HOUR"
+            },
+            {
+                "id": "last_day",
+                "label": "Last Day",
+                "value": "last_edited_date > CURRENT_TIMESTAMP - INTERVAL '1' DAY"
+            },
+            {
+                "id": "last_week",
+                "label": "Last Week",
+                "value": "last_edited_date > CURRENT_TIMESTAMP - INTERVAL '7' DAY"
+            }
+        ]
+    },
+    "analyticsSettings": [
+        {
+            "name": "FOC",
+            "alias": "Farthest On Circle Suite",
+            "parameters": [
+                {
+                    "parameter_name": "foc_tool_merge_results",
+                    "label": "Indication whether results for individual vessels may be merged (True) or not (False)",
+                    "data_type": "boolean",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "times_in_hours",
+                    "label": "Times in hours for which the farthest on circle will be determined",
+                    "data_type": "number",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "list"
+                },
+                {
+                    "parameter_name": "average_aircraft_speed_kts",
+                    "label": "Aircraft speed in knots",
+                    "data_type": "number",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "air_lps_item_id",
+                    "label": "Id for feature layer with last positions of tagged aircraft",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "tagged_aircraft_table_item_id",
+                    "label": "Id for table with the ids of aircraft to be analyzed",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "air_processing_lps_item_id",
+                    "label": "Id for feature layer of currently processed aircraft",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "air_foc_tool_taskname_GISApi",
+                    "label": "Air FOC task name when using GISApi connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "air_foc_tool_taskname_a3gis",
+                    "label": "Air FOC task name when using a3gis connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "air_foc_tool_rest_result_param_name",
+                    "label": "When running NoGIS for Air FOC, result data must be fetched from REST API using this result parameter name",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "air_foc_master_item_id",
+                    "label": "Id for feature layer of all farthest on circle (air) analysis results",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "air_weapon_table_item_id",
+                    "label": "Id of table of aircraft type to weapon type",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "air_threat_tool_taskname_GISApi",
+                    "label": "Air weapons threat rings task name when using GISApi connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "air_threat_tool_taskname_a3gis",
+                    "label": "Air weapons threat rings task name when using a3gis connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "air_threat_tool_rest_result_param_name",
+                    "label": "When running NoGIS for Air threat, result data must be fetched from REST API using this result parameter name",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "atr_processing_item_id",
+                    "label": "Id of feature layer of all air threat rings analysis results",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "atr_master_item_id",
+                    "label": "Id of Air threat ring master layer",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "facilities_at_risk_web_tool_taskname_GISApi",
+                    "label": "Air facilities at risk task name when using GISApi connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "facilities_at_risk_web_tool_taskname_a3gis",
+                    "label": "Air facilities at risk task name when using a3gis connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "air_fac_at_risk_master_item_id",
+                    "label": "Facilities at risk from air threats authoritative feature layer item",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "average_vessel_speed_kts",
+                    "label": "Vessel speed in knots",
+                    "data_type": "number",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "naval_lps_item_id",
+                    "label": "Id of feature layer with last positions of tagged vessels",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "vessel_processing_lps_item_id",
+                    "label": "Id of feature layer with vessels currently being processed",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "naval_foc_tool_item_id",
+                    "label": "Id of the Naval farthest on circle geoprocessing service",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item",
+                    "portal_item_type": "GP"
+                },
+                {
+                    "parameter_name": "naval_foc_main_item_id",
+                    "label": "Id of the naval farthest on circle results layer",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "naval_foc_tool_taskname_GISApi",
+                    "label": "Naval FOC task name when using GISApi connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "naval_foc_tool_taskname_a3gis",
+                    "label": "Naval FOC task name when using a3gis connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "output_raster_cell_sz_meters",
+                    "label": "Output raster cell size in meters for Naval farthest on circle",
+                    "data_type": "number",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "tagged_vessel_table_item_id",
+                    "label": "Id of table of vessel ids for vessels to be analyzed",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "vessel_weapon_table_item_id",
+                    "label": "Vessel type to weapons type table",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "weapon_range_table_item_id",
+                    "label": "Weapon types to distance table",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "ntr_main_item_id",
+                    "label": "Master layer for naval threat rings",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "ntr_processing_item_id",
+                    "label": "Id of feature layer with the currently processed Naval foc ring",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "naval_threat_tool_taskname_GISApi",
+                    "label": "Naval weapons threat rings task name when using GISApi connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "naval_threat_tool_taskname_a3gis",
+                    "label": "Naval weapons threat rings task name when using a3gis connections",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "naval_fac_at_risk_main_item_id",
+                    "label": "Facilities at risk from naval threats authoritative feature layer item",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "naval_threat_tool_rest_result_param_name",
+                    "label": "When running NoGIS for Naval threat, result data must be fetched from REST API using this result parameter name",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                }
+            ]
+        },
+        {
+            "name": "mobility",
+            "alias": "Mobility",
+            "parameters": [
+                {
+                    "parameter_name": "mobility_object_type_name",
+                    "label": "Mobility Object Type Name (e.g. Commander)",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "deployment_objects_item_id",
+                    "label": "Id for feature layer of observer points",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "cost_raster_name",
+                    "label": "Cost Raster Name (Feature Class in Enterprise Geodatabase)",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "out_path",
+                    "label": "Sub-folder location within gp_support_path where output rasters will go before a join to a mosaic dataset",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "md_deployment_name",
+                    "label": "Mosaic dataset within enterprise geodatabase for deployments",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "mobile_deployments_url",
+                    "label": "URL of image service of all mobility results",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "movement_tolerance",
+                    "label": "Distance in meters an observer needs to have moved before being re-analyzed",
+                    "data_type": "number",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "mobility_wkid",
+                    "label": "Well-known ID of the coordinate reference system the mobility analysis runs in",
+                    "data_type": "number",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "analysis_extent",
+                    "label": "Analysis Extent used as the buffer distance of point location",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "linear_unit"
+                },
+                {
+                    "parameter_name": "logfile_directory",
+                    "label": "Sub-folder location within out_path where output logfiles are written",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "parallel_processing_factor",
+                    "label": "Parallel processing factor (e.g. 75%)",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "vertical_factor",
+                    "label": "Vertical factor (e.g. 'BINARY 1 -30 30')",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "horizontal_factor",
+                    "label": "Horizontal factor (e.g. 'BINARY 1 45')",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "distance_method",
+                    "label": "Distance method ('PLANAR' or 'GEODESIC')",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "max_age_in_hours",
+                    "label": "Maximum age in hours of mobility results to keep (-1 = only keep latest result)",
+                    "data_type": "number",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "mobility_aoi_tessellation",
+                    "label": "Tessellation feature layer",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "tessellation_item_id",
+                    "label": "Item id of image service of the cost raster",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item",
+                    "portal_item_type": "Image Service"
+                }
+            ]
+        },
+        {
+            "name": "viewshed",
+            "alias": "Viewshed",
+            "parameters": [
+                {
+                    "parameter_name": "input_observer_features_item_id",
+                    "label": "Id of the feature layer with observers to analyze",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item",
+                    "portal_item_type": "feature"
+                },
+                {
+                    "parameter_name": "input_elevation_surface_item_id",
+                    "label": "Id of the elevation surface image service to use in the viewshed analysis",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item",
+                    "portal_item_type": "Image Service"
+                },
+                {
+                    "parameter_name": "create_viewshed_url",
+                    "label": "Item id of the geoprocessing service that performs the viewshed analysis",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item",
+                    "portal_item_type": "GP"
+                },
+                {
+                    "parameter_name": "optimize_for",
+                    "label": "Optimize viewshed for SPEED or ACCURACY",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "pick_list",
+                    "pick_list_options": ["SPEED", "ACCURACY"]
+                },
+                {
+                    "parameter_name": "maximum_viewing_distance",
+                    "label": "Maximum distance of viewshed",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "linear_unit"
+                },
+                {
+                    "parameter_name": "viewing_distance_is_3d",
+                    "label": "Whether to treat the distance as 3D distance (True) or not (False)",
+                    "data_type": "boolean",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "observers_height",
+                    "label": "Height of observers above ground",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "linear_unit"
+                },
+                {
+                    "parameter_name": "save_as_rasters",
+                    "label": "Whether to save the results in a mosaic dataset (True) or in a polygon layer (False)",
+                    "data_type": "boolean",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "merge_results",
+                    "label": "Merge individual observer viewsheds into single output (True) or not (False)",
+                    "data_type": "boolean",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "viewshed_max_age_in_hours",
+                    "label": "Maximum age of results to keep in hours (-1 means do not keep any history)",
+                    "data_type": "number",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "viewshed_aoi_tessellation",
+                    "label": "Item id of feature service holding the tessellation polygons",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                }
+            ]
+        },
+        {
+            "name": "PowerPoint",
+            "alias": "GATE Report",
+            "parameters": [
+                {
+                    "parameter_name": "gate_config_id",
+                    "label": "Portal Item for GATE config",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item"
+                },
+                {
+                    "parameter_name": "region_query_fields",
+                    "label": "Field names needed when querying the REGION table",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "list"
+                },
+                {
+                    "parameter_name": "landing_page_query_fields",
+                    "label": "Field names needed when querying the LANDINGPAGE table",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "list"
+                },
+                {
+                    "parameter_name": "analyst_comment_query_fields",
+                    "label": "Field names needed when querying the ANALYSTCOMMENTS table",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "list"
+                },
+                {
+                    "parameter_name": "calendar_query_fields",
+                    "label": "Field names needed when querying the ANALYSTCOMMENTS table",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "list"
+                },
+                {
+                    "parameter_name": "template_file_name",
+                    "label": "Filename of the PowerPoint template file to use",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                }
+            ]
+        },
+        {
+            "name": "deployment_probability",
+            "alias": "Deployment Probability",
+            "parameters": [
+                {
+                    "parameter_name": "study_name",
+                    "label": "study_name (REQUIRED): Study name must not contain spaces or special characters other than underscore.",
+                    "data_type": "string",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "output_database_path",
+                    "label": "output_database_path (REQUIRED): Absolute OS Path to a geodatabase that contains output_mosaic_dataset_name.",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "output_mosaic_dataset_name",
+                    "label": "output_mosaic_dataset_name (REQUIRED): Name of the output mosaic dataset.",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "input_observer_features_item_id",
+                    "label": "input_observer_features_item_id (REQUIRED): Item ID of the input point feature layer.",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item",
+                    "portal_item_type": "feature"
+                },
+                {
+                    "parameter_name": "input_tessellation_features_item_id",
+                    "label": "input_tessellation_features_item_id (REQUIRED): Item ID of the input tessellation feature layer tied to the primary image service.",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "portal_item",
+                    "portal_item_type": "feature"
+                },
+                {
+                    "parameter_name": "primary_image_service_item_id",
+                    "label": "primary_image_service_item_id (REQUIRED): Item ID of the primary input elevation image service.",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "secondary_image_service_item_id",
+                    "label": "secondary_image_service_item_id (OPTIONAL): Item ID of the secondary input elevation image service.",
+                    "data_type": "string",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "retention_policy",
+                    "label": "retention_policy (OPTIONAL, defaults to 0): Number of prior results to retain on each run.",
+                    "data_type": "number",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "cluster_search_distance",
+                    "label": "cluster_search_distance (OPTIONAL, defaults to '10 Kilometers'): The eps distance in DBSCAN expressed as a linear unit.",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "linear_unit"
+                },
+                {
+                    "parameter_name": "cluster_analysis_distance",
+                    "label": "cluster_analysis_distance (OPTIONAL, defaults to '50 Kilometers'): The buffer distance around each cluster, should be larger or the same size as cluster_search_distance.",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global",
+                    "control_type": "linear_unit"
+                },
+                {
+                    "parameter_name": "min_features_cluster",
+                    "label": "min_features_cluster (OPTIONAL, defaults to 4): The minimum points to define a cluster in DBSCAN or 'ESTIMATE_PARAMETERS' to estimate.",
+                    "data_type": "string",
+                    "required": true,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "vs_downsample_value",
+                    "label": "vs_downsample_value (OPTIONAL): How much to resample the input rasters for Viewshed2 either as a 'MULTIPLE' or 'ABSOLUTE' value.",
+                    "data_type": "number",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "vs_downsample_type",
+                    "label": "vs_downsample_type (OPTIONAL, defaults to 'ABSOLUTE'): How to apply the vs_downsample_value.",
+                    "data_type": "string",
+                    "required": false,
+                    "scope": "global",
+                    "control_type": "pick_list",
+                    "pick_list_options": ["MULTIPLY", "ABSOLUTE"]
+                },
+                {
+                    "parameter_name": "vs_clip_raster_to_aoi",
+                    "label": "vs_clip_raster_to_aoi (OPTIONAL, defaults to True): Clip input rasters for Viewshed2.",
+                    "data_type": "boolean",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "vs_observer_offset",
+                    "label": "vs_observer_offset (OPTIONAL, defaults to '5 METERS'): A pass-through parameter (observer_offset) for Viewshed2.",
+                    "data_type": "string",
+                    "required": false,
+                    "scope": "global",
+                    "control_type": "linear_unit"
+                },
+                {
+                    "parameter_name": "vs_surface_offset",
+                    "label": "vs_surface_offset (OPTIONAL, defaults to '5 METERS'): A pass-through parameter (surface_offset) for Viewshed2.",
+                    "data_type": "string",
+                    "required": false,
+                    "scope": "global",
+                    "control_type": "linear_unit"
+                },
+                {
+                    "parameter_name": "me_downsample_value",
+                    "label": "me_downsample_value (OPTIONAL): How much to resample the input rasters for MaxEnt either as a 'MULTIPLE' or 'ABSOLUTE' value.",
+                    "data_type": "number",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "me_downsample_type",
+                    "label": "me_downsample_type (OPTIONAL, defaults to 'ABSOLUTE'): How to apply the me_downsample_value.",
+                    "data_type": "string",
+                    "required": false,
+                    "scope": "global",
+                    "control_type": "pick_list",
+                    "pick_list_options": ["MULTIPLY", "ABSOLUTE"]
+                },
+                {
+                    "parameter_name": "me_clip_raster_to_aoi",
+                    "label": "me_clip_raster_to_aoi (OPTIONAL, defaults to True): Clip input rasters for MaxEnt.",
+                    "data_type": "boolean",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "me_calculate_and_analyze_slope",
+                    "label": "me_calculate_and_analyze_slope (OPTIONAL, defaults to False): If True, extracts slope from the input elevation layer and includes it as an explanatory raster in MaxEnt.",
+                    "data_type": "boolean",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "me_explanatory_rasters",
+                    "label": "me_explanatory_rasters (OPTIONAL, defaults to []): The item_id of hosted image services to serve as explanatory rasters in MaxEnt.",
+                    "data_type": "string",
+                    "required": false,
+                    "scope": "global",
+                    "control_type": "list"
+                },
+                {
+                    "parameter_name": "fast_dev_mode",
+                    "label": "fast_dev_mode (OPTIONAL, default to False): If True, processes a few AOIs.",
+                    "data_type": "boolean",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "fast_dev_iterations",
+                    "label": "fast_dev_iterations (OPTIONAL, default to 1): If fast_dev_mode is True, number of AOIs to process.",
+                    "data_type": "number",
+                    "required": false,
+                    "scope": "global"
+                },
+                {
+                    "parameter_name": "gp_support_path",
+                    "label": "gp_support_path (OPTIONAL, default to GPSupport): Sets the absolute working directory path.",
+                    "data_type": "string",
+                    "required": false,
+                    "scope": "global"
+                }
+            ]
+        }
+    ],
+    "search": {
+        "includeGeocoder": true,
+        "name": "Internal Test Geocoder",
+        "allPlaceholder": "example: 100 Main St",
+        "url": "https://cigt-srv21.esri.tech/server/rest/services/Whole_World_XY_CreateLocator/GeocodeServer"
+    },
+    "missionMessages": [
+        {
+            "rmtType": "THREAT",
+            "codes": [
+                {
+                    "type": "messageLandCodes",
+                    "codeAlias": "Land Codes",
+                    "queryLabels": ["queryFieldLabel", "translateFieldLabel"]
+                },
+                {
+                    "type": "messageWaterCodes",
+                    "codeAlias": "Water Codes",
+                    "queryLabels": ["queryFieldLabel"]
+                },
+                {
+                    "type": "messageCountryCodes",
+                    "codeAlias": "Country Codes",
+                    "queryLabels": ["queryFieldLabel", "translateFieldLabel"]
+                }
+            ]
+        },
+        {
+            "rmtType": "ASSESS",
+            "codes": [
+                {
+                    "type": "messageLandCodes",
+                    "codeAlias": "Land Codes",
+                    "queryLabels": ["queryFieldLabel", "translateFieldLabel"]
+                }
+            ]
+        }
+    ]
+}

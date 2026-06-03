@@ -1,0 +1,206 @@
+{
+    "refreshIntervalInMinutes": 2,
+	"regionName": "Midwest",
+    "summaryRowLabel": "Totals",
+    "defaultTotalColumnName": "  ",
+    "defaultTotalColumnValue": " ",
+    "categoryLabel": "Category",
+    "rows":[
+        {
+            "ftrClassPortalItemId": "fc7055219ca1442280fc662cdcb9d757", 
+            "hoverText": "Tooltip not implemented",
+            "rowLabel": "Taxis",
+            "positionInTable": 1,
+            "rowColumns":[
+                {
+                    "queryField": "*",
+                    "positionInTable": 1,
+                    "columnLabel": "Count",
+                    "query": "1=1"
+                },
+                {
+                    "queryField": "GPS",
+                    "positionInTable": 4,
+                    "columnLabel": "Located",
+                    "query": "gps_active = 'YES'"
+                },
+                {
+                    "queryField": "operational",
+                    "positionInTable": 2,
+                    "columnLabel": "Operational",
+                    "query": "operational = 'YES'"
+                },
+                {
+                    "queryField": "in_service",
+                    "positionInTable": 3,
+                    "columnLabel": "In Service",
+                    "query": "in_service = 'YES'"
+                }
+            ]
+        },
+        {
+            "ftrClassPortalItemId": "e831f1d6d2cf4e1b8267bfc10f44ece3", 
+            "hoverText": "Tooltip not implemented",
+            "rowLabel": "Boats",
+            "positionInTable": 2,
+            "rowColumns":[
+                {
+                    "queryField": "*",
+                    "positionInTable": 1,
+                    "columnLabel": "Everything",
+                    "query": "1=1"
+                },
+                {
+                    "queryField": "gps_active",
+                    "positionInTable": 4,
+                    "columnLabel": "Located",
+                    "query": "gps_active = 'YES'"
+                },
+                {
+                    "queryField": "operational",
+                    "positionInTable": 2,
+                    "columnLabel": "Operational",
+                    "query": "operational = 'YES'"
+                },
+                {
+                    "queryField": "in_service",
+                    "positionInTable": 3,
+                    "columnLabel": "Sent Out",
+                    "query": "in_service = 'YES'"
+                }  
+            ]
+        },
+        {
+            "ftrClassPortalItemId": "2c1ade8a1426488c83cfa359d4c9118c", 
+            "hoverText": "Tooltip not implemented",
+            "rowLabel": "Planes",
+            "positionInTable": 3,
+            "rowColumns":[
+                {
+                    "queryField": "*",
+                    "positionInTable": 1,
+                    "columnLabel": "Sum",
+                    "query": "1=1"
+                },
+                {
+                    "queryField": "GPS",
+                    "positionInTable": 2,
+                    "columnLabel": "Located",
+                    "query": "gps_active = 'YES'"
+                },
+                {
+                    "queryField": "operational",
+                    "positionInTable": 3,
+                    "columnLabel": "Operational",
+                    "query": "operational = 'YES'"
+                },
+                {
+                    "queryField": "in_service",
+                    "positionInTable": 4,
+                    "columnLabel": "In Field",
+                    "query": "in_service = 'YES'"
+                } 
+            ]
+        }, 
+        {
+            "ftrClassPortalItemId": "a5c4f7ec8bff4fc5a2698b14d088045d", 
+            "hoverText": "Tooltip not implemented",
+            "rowLabel": "Trucks",
+            "positionInTable": 4,
+            "rowColumns":[
+                {
+                    "queryField": "*",
+                    "positionInTable": 1,
+                    "columnLabel": "Total",
+                    "query": "1=1"
+                },
+                {
+                    "queryField": "GPS",
+                    "positionInTable": 4,
+                    "columnLabel": "Located",
+                    "query": "gps_active = 'YES'"
+                },
+                {
+                    "queryField": "operational",
+                    "positionInTable": 2,
+                    "columnLabel": "Operational",
+                    "query": "operational = 'YES'"
+                },
+                {
+                    "queryField": "in_service",
+                    "positionInTable": 3,
+                    "columnLabel": "On Road",
+                    "query": "in_service = 'YES'"
+                }
+            ]
+        }
+    ],
+    "defineColumnTotals": [
+        {
+            "columnOutputPosition": 1,
+            "columnLabel": "All",
+            "columns":[
+                {
+                    "rowPosition": 1,
+                    "columnName":"Count"
+                },
+                {
+                    "rowPosition": 2,
+                    "columnName":"Everything"
+                },
+                {
+                    "rowPosition": 3,
+                    "columnName":"Sum"
+                },
+				{
+                    "rowPosition": 4,
+                    "columnName":"Total"
+                }
+            ]
+        },
+		{
+            "columnOutputPosition": 2,
+            "columnLabel": "Active",
+            "columns":[
+                {
+                    "rowPosition": 1,
+                    "columnName":"In Service"
+                },
+                {
+                    "rowPosition": 2,
+                    "columnName":"Sent Out"
+                },
+                {
+                    "rowPosition": 3,
+                    "columnName":"In Field"
+                },
+                {
+                    "rowPosition": 4,
+                    "columnName":"On Road"
+                }
+            ]
+        },
+		{
+            "columnOutputPosition": 3,
+            "columnLabel": "Operational",
+            "columns":[
+                {
+                    "rowPosition": 1,
+                    "columnName":"Operational"
+                },
+                {
+                    "rowPosition": 2,
+                    "columnName":"Operational"
+                },
+                {
+                    "rowPosition": 3,
+                    "columnName":"Operational"
+                },
+                {
+                    "rowPosition": 4,
+                    "columnName":"Operational"
+                }
+            ]
+        }
+    ]	
+}
