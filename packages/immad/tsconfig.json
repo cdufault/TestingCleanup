@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "es2015.promise",
+      "es5",
+      "es6"
+    ],
+    "baseUrl": ".",
+    "paths" : {
+      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc" ]
+    },
+    "target": "es6",
+    "module": "amd",
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "declaration": false,
+    "noLib": false,
+    "preserveConstEnums": true,
+    "noEmit": true,
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noEmitOnError": false,
+    "noUnusedLocals": true,
+    "importHelpers": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "typeRoots": [
+    "node_modules/@types",
+    "node_modules"
+  ],
+  "types": [
+    "arcgis-js-api",
+    "moment",
+    "material-ui",
+    "calcite-ui-icons-react"
+  ],
+  "include": [
+    "src/*",
+    "node_modules/**/*.d.ts",
+    "node_modules/@types/**/*.d.ts"
+  ]
+}
