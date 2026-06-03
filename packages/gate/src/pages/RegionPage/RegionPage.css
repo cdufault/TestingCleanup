@@ -1,0 +1,146 @@
+.region-container{
+    background-color:#282c34; 
+    display:flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.tabs-box {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.color-white {
+    color: white;
+}
+
+.presentation-header-text-div {
+    margin-top:.5rem;
+    font-size: 1.5rem;
+    display: inline-block;
+}
+
+.home-button {
+    flex-basis: 20px;
+}
+
+.tabs-div {
+    padding-left: 5px;
+    flex-basis: calc(50% - 40px); 
+}
+
+.j2assessment-div {
+    padding-right: 20px; 
+    flex-basis: 50%;
+    display: flex; 
+    justify-content: flex-end;
+}
+
+.j2assessment-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white; 
+    margin-left: 15%; 
+    margin-right: 5%; 
+    margin-bottom: 15px;
+}
+
+.map-tab-div {
+    display: flex;
+    flex-basis: 100%;
+}
+
+.non-map-tab-div {
+    display: flex;
+    flex-basis:100%;
+}
+
+.region-toolbar {
+    background-color: #282c34;
+    color: white;
+    padding-top: 40px;
+    padding-left:5px;
+    padding-right:5px;
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+    align-items: center;
+}
+
+.reset-toolbar {
+    background-color: #282c34;
+    color: white;
+    padding-top: 20px;
+    padding-left:5px;
+    padding-right:5px;
+    display: flex;
+    flex-direction: column;
+    width: 60px;
+    align-items: center;
+}
+
+.tabpanel0 {
+     flex-basis:100%;
+     background:yellow;
+     display:flex;
+ }
+
+ .tab-children {
+    display: flex;
+    flex: 1;
+ }
+
+ .flex-layout-container-div {
+     position: relative;
+     flex-basis:100%;
+ }
+
+ .webmap {
+    padding:0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.map-wait-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.iframe-box {
+    flex:100%;
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    background-color: lightgray;
+}
+
+@media (max-width: 1000px){
+    .flex-layout-container-div {
+        position: relative;
+        flex-basis:100vw;
+    }
+    .j2assessment-div {
+        margin-left:20px;
+    }
+}
+
+.styled-buttons.toolbar-buttons {
+    width: 40px;
+    height: 56px;
+    padding: 15px 8px;
+    /*background: #3d445b !important;*/
+    border-radius: 20px;
+    color: #0daeff;
+}
+
+.buttongroups-container {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,0 +1,24 @@
+.carousel-container {
+    position: relative;
+    transform-style: preserve-3d;
+    height: 100%;
+}
+
+.carousel-content {
+    position: relative;
+    transition: transform 6s ease;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    margin: auto;
+    width: 95%;
+    bottom: 0;
+    padding-top: 20px;
+    padding-bottom: 90px;
+}
+
+.carousel-content > *{
+    flex-grow: 1;
+}
+
+

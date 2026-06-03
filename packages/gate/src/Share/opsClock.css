@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'DSEG7-Classic';
+    src: url('dseg/fonts/DSEG7-Classic/DSEG7Classic-BoldItalic.woff2') format('woff2'),
+    url('dseg/fonts/DSEG7-Classic/DSEG7Classic-BoldItalic.woff') format('woff'),
+    url('dseg/fonts/DSEG7-Classic/DSEG7Classic-BoldItalic.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  .opsclocks-array {
+    width: 100%;
+  }

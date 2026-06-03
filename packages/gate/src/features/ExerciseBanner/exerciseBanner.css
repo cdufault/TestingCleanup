@@ -1,0 +1,19 @@
+.exercise-banner-background {
+    background: repeating-linear-gradient(45deg, #FF6700, #FF6700 20px, #ff9248 20px, #ff9248 40px);
+    height: 20px;
+}
+
+.exercise-header-div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.exercise-h1 {
+    color: #000;
+    font-weight:bold;
+    text-align:center;
+    font-size: calc(4px + 1.5vmin);
+    text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff,-1px 1px 0 #fff, 1px 1px 0 #fff;
+}

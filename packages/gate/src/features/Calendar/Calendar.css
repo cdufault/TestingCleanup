@@ -1,0 +1,62 @@
+
+.Calendar-image {
+    align-items: center;
+    height: 35vmin;
+    pointer-events: none;
+    width: 100%;
+}
+
+div.timeLineDiv {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding-left: 2em;
+    padding-right: 2em;
+    z-index: 1;
+}
+
+Button.prevWeek{
+    flex: 1;
+    position: absolute;
+    left: 0;
+    height: 100%;
+    min-width: unset;
+    width: 10px;
+}
+
+Button.nextWeek{
+    flex: 1;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    min-width: unset;
+    width: 10px;
+    justify-content: left;
+}
+
+.gateTimeline .rct-dateHeader-primary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+div.react-calendar-timeline .rct-header-root {
+    background: #eaeaea;
+    border-top: 1px solid #bbb;
+}
+
+div.react-calendar-timeline .rct-calendar-header {
+    border:none;
+}
+
+.custom-group-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-item {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

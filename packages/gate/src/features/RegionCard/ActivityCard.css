@@ -1,0 +1,128 @@
+/** CARD **/
+.activity-card.MuiPaper-root.MuiCard-root {
+    position: relative;
+    padding: 20px;
+    min-width: 300px;
+    background-color: #292d3f;
+    color: white;
+    border-radius: 8px !important;
+}
+
+.activity-card .ql-editor {
+    padding: 0;
+    margin: 0;
+}
+
+.activity-card .MuiChip-root {
+    padding: 0;
+    border-radius: 18px;
+    overflow: visible;
+}
+/****/
+
+/** ELEMENTS SPACING **/
+.activity-element-top {
+    margin-bottom: 5px;
+}
+
+.activity-element-middle {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.activity-element-bottom {
+    margin-top: 5px;
+}
+/****/
+
+/** CARD CHIP HEADER **/
+.activity-header {
+    width: -webkit-fill-available;
+    height: 35px;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.activity-card .chip {
+    height: 35px;
+    align-items: center;
+    display: flex;
+    width: auto;
+    font-style: normal;
+    line-height: normal;
+    font-family: Roboto, serif;
+}
+
+.activity-card .chip-confidence {
+    font-weight: 500;
+    font-size: 18px;
+    box-shadow: 2px 2px 4px 0 rgba(52, 52, 52, 0.25);
+}
+.activity-card .chip-expected {
+    background-color: #44614c;
+    color: white;
+}
+.activity-card .chip-not-expected {
+    background-color: #c7694c;
+    color: white;
+}
+
+.activity-card .chip-level {
+    font-weight: 400;
+    font-size: 18px;
+    border: 2px solid #ffffff;
+    text-shadow: -2px 2px 4px rgba(52, 52, 52, 0.25);
+    box-shadow: -2px 2px 4px 0 rgba(52, 52, 52, 0.25);
+}
+
+.activity-card .chip > span {
+    padding: 10px 12px;
+    letter-spacing: 0.18px;
+}
+
+/** CATEGORY LABEL **/
+.activity-card-category {
+    padding: 3px 10px;
+    margin: 10px 10px;
+    background: #202332;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.activity-card-category-value {
+    margin: 0;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.334;
+    letter-spacing: 0.25px;
+}
+
+.category-typography {
+    color: white;
+}
+/****/
+
+/** CARD CONTENT **/
+.MuiCardContent-root.activity-card-content.activity-element-middle {
+    padding: 0;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+/****/
+
+/** ICOD **/
+.activity-card-icod {
+    font-size: 12px;
+    color: #bfbfbf;
+    display: flex;
+    justify-content: center;
+    padding: 5px 30px;
+}
+/****/
+
+/* Typography */
+.category-typography {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
