@@ -1,0 +1,42 @@
+{
+  "portalUrl": "{ARCGIS_PORTAL_URL}",
+  "oauthAppId": "{GATE_OAUTH_ID}",
+  "version": "{VERSION_NUMBER}",
+  "queryForGateApplication": "typekeywords:\"GATE\" AND type: \"Web Mapping Application\"",
+  "appPortalId": "{APP_PORTAL_ID}",
+  "gateAdminGroupId": "{GATE_ADMIN_GROUP_ID}",
+  "appIsExercise": false,
+  "brandingLogoPath": "/gate/branding/",
+  "countWidgetRowColors": [
+    "silver",
+    "darkgray"
+  ],
+  "lastUpdatedFieldName": "last_edited_date",
+  "executeCountQueriesSequentially": true,
+  "useClientSideFeatures": false,
+  "clientSideDataCacheUpdateFrequencyInSeconds": 600,
+  "lightingIsEnabled": false,
+  "defaultSymbol": {
+    "size": 10,
+    "color": [
+      255,
+      0,
+      0
+    ],
+    "outline": {
+      "color": [
+        0,
+        0,
+        0
+      ],
+      "width": 1
+    }
+  },
+  "importantAnniversaryColor" : "#f50707",
+  "search": {
+    "includeGeocoder": true,
+    "name": "{SEARCH_GEOCODER_NAME}",
+    "placeholder": "example: 100 Main St",
+    "url": "{SEARCH_GEOCODER}"
+  }
+}

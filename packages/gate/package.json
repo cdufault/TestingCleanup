@@ -1,0 +1,64 @@
+{
+  "name": "@stratcom/gate",
+  "version": "3.6.2",
+  "homepage": ".",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@esri/arcgis-rest-request": "^3.5.1",
+    "@mui/material": "^5.11.6",
+    "@reduxjs/toolkit": "^1.9.1",
+    "@stratcom/lib-functions": "1.0.0",
+    "@stratcom/react-widget-lib": "0.1.0",
+    "calcite-ui-icons-react": "^0.38.0",
+    "flexlayout-react": "^0.7.5",
+    "interactjs": "^1.10.17",
+    "moment": "^2.29.4",
+    "notistack": "^3.0.1",
+    "react": "^18.2.0",
+    "react-calendar-timeline": "^0.28.0",
+    "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.7.0",
+    "redux": "^4.2.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build && npm run copy && npm run create-version ",
+    "test": "craco test --passWithNoTests",
+    "eject": "craco eject",
+    "prettier": "prettier --write \"src/**/*.ts?(x)\"",
+    "copy": "ncp ../../node_modules/@arcgis/core/assets ./public/assets",
+    "get-version": "awk -F '\"' '/\"version\"/{if (ENVIRON[\"BUILD_ID\"]) print $4 \".b\" ENVIRON[\"BUILD_ID\"]; else print $4 \".devel_\" ENVIRON[\"USERNAME\"] \"_\" systime()}' package.json",
+    "create-version": "npm run --silent get-version > version.txt"
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/node": "^16.18.4",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-router-dom": "^5.3.3",
+    "react-scripts": "5.0.1",
+    "typescript": "^4.9.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "last 2 versions",
+      "not dead",
+      "not ie 11",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
