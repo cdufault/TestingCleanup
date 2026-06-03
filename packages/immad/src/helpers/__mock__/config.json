@@ -1,0 +1,244 @@
+{
+    "portalUrl": "https://cigt-srv21.esri.tech/portal",
+    "classificationBanner": "UNCLASSIFIED/FOUO (SAMPLE LABEL - NOT DYNAMIC)",
+    "defaultWebMapId": "33671e1ff7f143d9aebb9b633c2411ec",
+    "defaultWebSceneId": "a96222edcd3844728ffc8685cfcd23db",
+    "outputDebugMessages": true,
+    "tags": {
+        "webmap": "immad-webmap",
+        "webscene": "immad-webscene",
+        "group": "immad-group",
+        "user": "immad-user",
+        "webTool": "immad-tool",
+        "gpTool": "immad-tool",
+        "dataFeed": "immad-datafeed",
+        "mission": "immad-mission",
+        "missionData": "immad-mission-data",
+        "application": "immad-application"
+    },
+    "savedState": {
+        "itemId": "a5b4e6232a084df2beeea3459a75070c"
+    },
+    "roles": {
+        "tag": "immad-role",
+        "admin": {
+            "tag": "IMMAD-Admin",
+            "privileges": [
+                "features:user:edit",
+                "portal:admin:assignToGroups",
+                "portal:admin:changeUserRoles",
+                "portal:admin:reassignItems",
+                "portal:admin:updateItemCategorySchema",
+                "portal:admin:viewGroups",
+                "portal:admin:viewItems",
+                "portal:admin:viewUsers",
+                "portal:publisher:publishFeatures",
+                "portal:publisher:publishScenes",
+                "portal:publisher:publishServerGPServices",
+                "portal:publisher:publishServerServices",
+                "portal:publisher:publishTiles",
+                "portal:user:createGroup",
+                "portal:user:createItem",
+                "portal:user:joinGroup",
+                "portal:user:shareGroupToOrg",
+                "portal:user:shareGroupToPublic",
+                "portal:user:shareToGroup",
+                "portal:user:shareToOrg",
+                "portal:user:shareToPublic",
+                "portal:user:viewOrgGroups",
+                "portal:user:viewOrgItems",
+                "portal:user:viewOrgUsers",
+                "premium:publisher:geoanalytics",
+                "premium:publisher:rasteranalysis",
+                "premium:user:geocode",
+                "premium:user:spatialanalysis"
+            ]
+        },
+        "missionManager": {
+            "tag": "IMMAD-MissionManager",
+            "privileges": [
+                "features:user:edit",
+                "portal:admin:assignToGroups",
+                "portal:admin:updateItemCategorySchema",
+                "portal:admin:updateItems",
+                "portal:admin:viewGroups",
+                "portal:admin:viewItems",
+                "portal:admin:viewUsers",
+                "portal:publisher:publishFeatures",
+                "portal:publisher:publishScenes",
+                "portal:publisher:publishServerServices",
+                "portal:user:createGroup",
+                "portal:user:createItem",
+                "portal:user:joinGroup",
+                "portal:user:shareGroupToOrg",
+                "portal:user:shareGroupToPublic",
+                "portal:user:shareToGroup",
+                "portal:user:shareToOrg",
+                "portal:user:shareToPublic",
+                "portal:user:viewOrgGroups",
+                "portal:user:viewOrgItems",
+                "portal:user:viewOrgUsers",
+                "premium:publisher:geoanalytics",
+                "premium:publisher:rasteranalysis",
+                "premium:user:geocode",
+                "premium:user:spatialanalysis"
+            ]
+        },
+        "analyst": {
+            "tag": "IMMAD-Analyst",
+            "privileges": [
+                "features:user:edit",
+                "portal:publisher:publishFeatures",
+                "portal:publisher:publishScenes",
+                "portal:publisher:publishServerServices",
+                "portal:user:createGroup",
+                "portal:user:createItem",
+                "portal:user:joinGroup",
+                "portal:user:shareToGroup",
+                "portal:user:viewOrgGroups",
+                "portal:user:viewOrgItems",
+                "portal:user:viewOrgUsers",
+                "premium:publisher:geoanalytics",
+                "premium:publisher:rasteranalysis",
+                "premium:user:geocode",
+                "premium:user:spatialanalysis"
+            ]
+        }
+    },
+    "viewshed": {
+        "gpServiceUrl" : "/server/rest/services/IMMAD-GP/Viewshed/GPServer/CreateViewshed", 
+        "sharedWith": [
+            "IMMAD-Analyst"
+        ],    
+        "optimizeFor": "ACCURACY",
+        "maxDistance": 10,
+        "maxDistanceUnits": "kilometers",
+        "observerHeight": 2,
+        "observerHeightUnits": "meters",
+        "outputNamePrefix": "Viewshed_",
+        "visibilitySuffix": "_Visibility",
+
+        "_comment": "predefined color ramps are 'Surface', 'Temperature' and 'Red Bright'",
+        "viewshedColorRamp": "Red Bright",
+        "visibilitySurfaceColorRamp": "Surface",
+        "elevationLayerTag": "elevation",
+        "pointSymbol2d": {
+            "style": "circle",
+            "color": [
+                255,
+                0,
+                0
+            ],
+            "size": "10px",
+            "outline": {
+                "color": [
+                    82,
+                    82,
+                    122
+                ],
+                "width": "2px"
+            }
+        },
+        "pointSymbol3d": {
+            "symbolLayers": [
+                {
+                    "type": "icon",
+                    "width": "10px",
+                    "depth": "10px",
+                    "resource": {
+                        "primitive": "circle"
+                    },
+                    "outline": {
+                        "color": [
+                            82,
+                            82,
+                            122
+                        ],
+                        "size": "2px"
+                    },
+                    "material": {
+                        "color": [
+                            255,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "mobilityAnalysis": {
+        "gpServiceUrl" : "/server/rest/services/IMMAD-GP/CalculateTravelCost/GPServer/CalculateTravelCost",
+        "sharedWith": [
+            "IMMAD-Analyst"
+        ],
+        "_comment": "predefined color ramps are 'Surface', 'Temperature' and 'Red Bright'",
+        "mobilityColorRamp": "Surface",
+        "backlinkColorRamp": "Temperature",
+
+        "elevationLayerTag": "elevation",
+        "costSurfaceTag": "cost",
+        "defaultCellSize": "MAXOF",
+        "cellSizeSelections": [10, 30, 90],
+
+        "_comment1": "Valid unit values are 'METERS', 'FEET', 'DEGREES'",
+        "cellSizeUnits": "METERS",
+        "maxCostTime": 5,
+
+        "outputNamePrefix": "Mobility_",
+        "backlinkSuffix": "_BackDirection",
+        "pointSymbol2d": {
+            "style": "circle",
+            "color": [
+                255,
+                165,
+                0
+            ],
+            "size": "10px",
+            "outline": {
+                "color": [
+                    82,
+                    82,
+                    122
+                ],
+                "width": "2px"
+            }
+        },
+        "pointSymbol3d": {
+            "symbolLayers": [
+                {
+                    "type": "icon",
+                    "width": "10px",
+                    "depth": "10px",
+                    "resource": {
+                        "primitive": "circle"
+                    },
+                    "outline": {
+                        "color": [
+                            82,
+                            82,
+                            122
+                        ],
+                        "size": "2px"
+                    },
+                    "material": {
+                        "color": [
+                            255,
+                            165,
+                            0
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "routeFinder": {
+        "optimalPathServiceUrl": "https://cigt-srv21.esri.tech/server/rest/services/OptimalPathAsPolyline/GPServer/Optimal%20Path%20as%20Polyline",
+        "sortFields": [
+            "pathcost"
+        ]
+    },
+    "settings": {
+        "disableSceneLighting" : true
+    }
+}
