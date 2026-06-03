@@ -1,0 +1,24 @@
+@import '../../css/variables.scss';
+
+.header {
+    background-color: $primaryBase;
+    color: $primaryText;
+    border-bottom: 3px solid $secondaryBase;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    .logo {
+      max-height: 3rem;
+      margin: .5rem;
+      vertical-align: middle;
+    }
+    .title {
+      vertical-align: middle;
+      font-size: 32px;
+    }
+    .user {
+      margin: 1.4rem 1rem;
+    }
+}
