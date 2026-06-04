@@ -11,8 +11,8 @@
  *   joinLabel('Save', '', 'Config')           -> 'Save Config'
  */
 export function joinLabel(...parts: Array<string | null | undefined>): string {
-    return parts
-        .map((p) => (p == null ? '' : String(p).trim()))
-        .filter((p) => p.length > 0)
-        .join(' ');
+	return parts
+		.map((p) => (p == null ? "" : String(p).trim()))
+		.filter((p) => p.length > 0)
+		.join(" ");
 }
