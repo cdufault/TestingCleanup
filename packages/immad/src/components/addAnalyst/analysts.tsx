@@ -25,6 +25,7 @@ import { getPortalGroupUsers } from '../../helpers/portalUsersHelper';
 import { RootState } from '../../data/store';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { updateAnalystsInTheMission } from '../home/components/missionCreate/MissionCreationSlice';
+import { joinLabel } from '../../Constants';
 
 const allAnalystsGridColumns: GridColDef[] = [
     {
@@ -321,7 +322,7 @@ const Analysts = (props: {
                 <StyledBoxAllAnalystGrid>
                     <Box>
                         <Typography variant='subtitle2' align='center'>
-                            All IMMAD Analysts
+                            {joinLabel('All', props.config?.appLabel ?? '', 'Analysts')}
                         </Typography>
                     </Box>
                     <DataGrid

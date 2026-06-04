@@ -11,6 +11,7 @@ import { ThemeProvider } from '@emotion/react';
 import { theme } from '../../assets/theme';
 import { Box, Button, Typography } from '@mui/material';
 import { RootState } from '../../data/store';
+import { joinLabel } from '../../Constants';
 
 /**
  * This is the page that will be displayed when the GATE application is not configured
@@ -22,9 +23,10 @@ export default function ConfigurationPage() {
     const thePortal = StaticAuthenticationState.getPortalState();
     const user = thePortal.user;
     const gateConfigured = useAppSelector((state) => state.applicationSlice.gateConfigured);
+    const appLabel = useAppSelector((state) => state.applicationSlice.applicationConfig?.appLabel ?? '');
     const [isAdmin, setIsAdmin] = useState(false);
     const [message, setMessage] = useState(
-        'The GATE application has not been configured yet. Contact your GATE or Esri Portal administrator.'
+        `${joinLabel('The', appLabel, 'application has not been configured yet.')} Contact your ${appLabel ? appLabel + ' or ' : ''}Esri Portal administrator.`
     );
     const [showForm, setShowForm] = useState(false);
     const [isInitialized, setIsInitialized] = useState(false);
@@ -51,8 +53,8 @@ export default function ConfigurationPage() {
 
         setMessage(
             isAdmin
-                ? 'The GATE application has not been configured yet. Would you like to configure it now?'
-                : `The user [${user.username}] does not have sufficient priviledges to configure GATE. Contact your GATE or Esri Portal administrator.`
+                ? `${joinLabel('The', appLabel, 'application has not been configured yet.')} Would you like to configure it now?`
+                : `The user [${user.username}] does not have sufficient priviledges to configure${appLabel ? ' ' + appLabel : ''}. Contact your ${appLabel ? appLabel + ' or ' : ''}Esri Portal administrator.`
         );
         setIsAdmin(isAdmin);
         setIsInitialized(true);
@@ -99,7 +101,7 @@ export default function ConfigurationPage() {
                             </Typography>
                             {isAdmin ? (
                                 <Button size='medium' variant='contained' onClick={handleOnClick}>
-                                    Configure Gate Now
+                                    {joinLabel('Configure', appLabel, 'Now')}
                                 </Button>
                             ) : (
                                 ''

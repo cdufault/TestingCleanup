@@ -73,7 +73,7 @@ export default function Administrator(): JSX.Element {
                     <StyledAdminAppBar position='static' color='primary'>
                         <Branding>
                             <Logo src={LogoImage} alt='US Strategic Command seal image' />
-                            <h1 title={appVersion?.trim()}>IMMAD</h1>
+                            <h1 title={appVersion?.trim()}>{ConfigHelper.getAppConfig()?.appLabel ?? ''}</h1>
                         </Branding>
                         <AppContext.Consumer>
                             {(context) => (

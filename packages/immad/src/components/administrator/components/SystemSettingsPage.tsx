@@ -33,6 +33,7 @@ import {
     setSlicePollingInterval,
 } from './AdminSettingsSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
+import { joinLabel } from '../../../Constants';
 
 type GateAppSettings = {
     dynamicLayerServiceId: { itemId: string };
@@ -418,7 +419,7 @@ export default function SystemSettingsPage(): JSX.Element {
     return (
         <>
             <Typography variant='h4' gutterBottom={true}>
-                IMMAD Settings
+                {joinLabel(ConfigHelper.getAppConfig()?.appLabel ?? '', 'Settings')}
                 {isDisabled ? (
                     <StyledRightButton variant='contained' color='secondary' onClick={editButtonClicked}>
                         Edit
@@ -459,13 +460,13 @@ export default function SystemSettingsPage(): JSX.Element {
 
             <StyledPortalItemSelectBox>
                 <Typography variant='h4' gutterBottom={false}>
-                    GATE Settings
+                    {joinLabel(ConfigHelper.getAppConfig()?.gate?.gateLabel ?? '', 'Settings')}
                 </Typography>
             </StyledPortalItemSelectBox>
 
             <FieldGroup>
                 <Typography variant={'h6'} gutterBottom={true}>
-                    Push to GATE (Dynamic Layers)
+                    {joinLabel('Push to', ConfigHelper.getAppConfig()?.gate?.gateLabel ?? '', '(Dynamic Layers)')}
                 </Typography>
 
                 <FieldGroup>
@@ -490,7 +491,7 @@ export default function SystemSettingsPage(): JSX.Element {
                         {isPublishing && <CircularProgress variant={'indeterminate'} />}
                         <ConfirmationDialog
                             description={
-                                'This will publish a new service for the GATE Push Dynamic Layer functionality. Do you wish to continue?'
+                                `This will publish a new service for the${(ConfigHelper.getAppConfig()?.gate?.gateLabel ?? '') ? ' ' + ConfigHelper.getAppConfig().gate.gateLabel : ''} Push Dynamic Layer functionality. Do you wish to continue?`
                             }
                             open={showPublishConfirmation}
                             title={'Publish Dynamic Service'}
@@ -548,7 +549,7 @@ export default function SystemSettingsPage(): JSX.Element {
                         <PortalItemSelect
                             theme={theme}
                             portal={Portal.getDefault() as Portal}
-                            label={'GATE Application'}
+                            label={joinLabel(ConfigHelper.getAppConfig()?.gate?.gateLabel ?? '', 'Application')}
                             disabled={isDisabled}
                             query={"type: 'application'"}
                             portalItemID={newSelectedGateAppId ? newSelectedGateAppId : gateAppIdFromSlice}

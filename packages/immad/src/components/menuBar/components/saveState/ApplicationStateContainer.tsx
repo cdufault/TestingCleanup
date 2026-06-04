@@ -826,8 +826,9 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
         //IMMAD_Default is implemented without a group only a scene. See setMissionsInMenu()
         //hence there is no immadVersion association
         if (missionMetaData && missionMetaData.immadVersion !== appConfig.immadVersion) {
+            const appLabel = appConfig?.appLabel ?? '';
             enqueueSnackbar(
-                'The version of this IMMAD Mission does not match the current version. Edit and save the Mission to update it to the latest.',
+                `The version of this${appLabel ? ' ' + appLabel : ''} Mission does not match the current version. Edit and save the Mission to update it to the latest.`,
                 { variant: 'warning' }
             );
         }
@@ -1007,7 +1008,8 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
         findPortalItemById(missionMapId).then(async (result) => {
             if (result) {
                 if (value !== 1) {
-                    enqueueSnackbar('Can not save workspaces for Gate Missions. Must save default only.', {
+                    const gateLabel = appConfig?.gate?.gateLabel ?? '';
+                    enqueueSnackbar(`Can not save workspaces for${gateLabel ? ' ' + gateLabel : ''} Missions. Must save default only.`, {
                         variant: 'warning',
                     });
                     setOpenNameDialog(false);

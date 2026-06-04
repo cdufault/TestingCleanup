@@ -472,7 +472,9 @@ const WebMapView = (): JSX.Element => {
                         setLastViewLoaded(viewState?.currentView);
                     } catch (error) {
                         if ((error as Error)?.name?.includes('not-authorized')) {
-                            enqueueSnackbar(`Insufficient privileges to view layers, contact GATE admin.`, {
+                            enqueueSnackbar(
+                                `Insufficient privileges to view layers, contact${appConfig?.appLabel ? ' ' + appConfig.appLabel : ''} admin.`,
+                                {
                                 variant: 'error',
                                 autoHideDuration: 12000,
                                 anchorOrigin: { vertical: 'bottom', horizontal: 'center' },

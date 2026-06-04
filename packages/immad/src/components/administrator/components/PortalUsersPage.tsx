@@ -41,6 +41,7 @@ import Box from '@mui/material/Box';
 import UpdateModalDialog from './UpdateModalDialog';
 import { findPortalGroupByTitle } from '../../../helpers/portalGroupHelper';
 import { useSnackbar } from 'notistack';
+import { joinLabel } from '../../../Constants';
 
 /**
  * Actions for elements in the Layer List.
@@ -253,7 +254,7 @@ export default function PortalUsersPage(): JSX.Element {
                 id: HeadCellIds.role,
                 numeric: false,
                 disablePadding: true,
-                label: 'IMMAD User Type',
+                label: joinLabel(appConfig?.appLabel ?? '', 'User Type'),
                 sortEnabled: false,
             },
         ];
@@ -781,7 +782,7 @@ export default function PortalUsersPage(): JSX.Element {
                     </StyledSpaceBetweenRow>
                     <StyledMuiAccordion>
                         <StyledMuiAccordionSummary aria-controls='filtersPanel-content' id='filtersPanel-header'>
-                            <Typography>IMMAD User Type</Typography>
+                            <Typography>{joinLabel(appConfig?.appLabel ?? '', 'User Type')}</Typography>
                             <Box display={currentFilter.current.id !== 0 ? 'contents' : 'none'}>
                                 <StyledRightButtonAccordionSummary
                                     variant='text'

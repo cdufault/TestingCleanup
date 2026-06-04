@@ -16,6 +16,7 @@ import PortalItem from '@arcgis/core/portal/PortalItem';
 import { RootState } from '../../data/store';
 import { DEFAULT_SYSTEM_HIGH_CLASSIFICATION } from '../../Constants';
 import { OpsClockDataSerializable } from '@stratcom/react-widget-lib/types/OpsClockWidgetLib';
+import { joinLabel } from '../../Constants';
 
 export default function ConfigurationForm() {
     const [formData, setFormData] = useState<GateDynamicConfig>(useAppSelector((state) => state.formDataSlice));
@@ -26,6 +27,7 @@ export default function ConfigurationForm() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const appConfig = useSelector((state: RootState) => state.applicationSlice.applicationConfig);
+    const appLabel = appConfig?.appLabel ?? '';
     const [existingClocksList, setExistingClocksList] = useState<OpsClockDataSerializable[]>([]);
     const defaultClock: OpsClockDataSerializable[] = [
         {
@@ -175,11 +177,11 @@ export default function ConfigurationForm() {
             }
         }
         if (!configurationData.gateCalendarFeatureClassId) {
-            errors.gateCalendarFeatureClassId = 'ID Required for GATE Calendar FeatureClass Id';
+            errors.gateCalendarFeatureClassId = joinLabel('ID Required for', appLabel, 'Calendar FeatureClass Id');
         } else {
             const result = await isValidFeatureServiceGuid(configurationData.gateCalendarFeatureClassId);
             if (!result) {
-                errors.gateCalendarFeatureClassId = 'Invalid Value for GATE Calendar FeatureClass Id';
+                errors.gateCalendarFeatureClassId = joinLabel('Invalid Value for', appLabel, 'Calendar FeatureClass Id');
             }
         }
         if (!configurationData.j2SummaryFeatureClassId) {
@@ -326,7 +328,7 @@ export default function ConfigurationForm() {
         <ThemeProvider theme={theme}>
             <Box className='gate-config-container'>
                 <Box className='gate-config-header-container'>
-                    <h1>GATE Configuration Settings</h1>
+                    <h1>{joinLabel(appLabel, 'Configuration Settings')}</h1>
                 </Box>
                 <div className='gate-input-group'>
                     <Box className={'gate-ops-clock-settings'}>
@@ -366,7 +368,7 @@ export default function ConfigurationForm() {
                         <PortalItemSelect
                             theme={theme}
                             portal={Portal.getDefault() as Portal}
-                            label={'GATE Calendar FeatureClass *'}
+                            label={joinLabel(appLabel, 'Calendar FeatureClass *')}
                             query={"type: 'feature'"}
                             portalItemID={formData.gateCalendarFeatureClassId}
                             onItemChange={(item: PortalItem | null) => {

@@ -111,7 +111,8 @@ function GateDataEditor(): JSX.Element {
             currentlySelectedApp && setSelectedAppId(currentlySelectedApp.id);
             if (!currentlySelectedApp) {
                 setEditingDisabled(true);
-                setErrorMessage('Current mission was not found in the GATE mission list.');
+                const gateLabel = appConfig?.gate?.gateLabel ?? '';
+                setErrorMessage(`Current mission was not found in the${gateLabel ? ' ' + gateLabel : ''} mission list.`);
                 return;
             }
         }

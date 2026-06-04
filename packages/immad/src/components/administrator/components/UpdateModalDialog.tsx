@@ -8,6 +8,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { StyledDivCentered, StyledDialogContent, StyledSuccessIcon, StyledCircularProgress } from '../styles';
 import { useAdminSettingsContext } from '../../../contexts/AdminSettingsContext';
+import { ConfigHelper } from '../../../helpers/configHelper';
+import { joinLabel } from '../../../Constants';
 
 /**
  * Interface to handle callback and input data coming from
@@ -61,7 +63,7 @@ export default function UpdateModalDialog(props: UpdateModalDialogProps): JSX.El
                             <StyledCircularProgress color='secondary' size={60} />
                         </StyledDivCentered>
                         <StyledDivCentered>
-                            <DialogContentText>Updating IMMAD User Types...</DialogContentText>
+                            <DialogContentText>{joinLabel('Updating', ConfigHelper.getAppConfig()?.appLabel ?? '', 'User Types...')}</DialogContentText>
                         </StyledDivCentered>
                     </>
                 ) : (

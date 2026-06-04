@@ -37,6 +37,7 @@ import { GateCalendarEvent, GateCalendarEventSerializable, getPortalItemDataById
 import { useSnackbar } from 'notistack';
 import { useSaveLoadContext } from '../../contexts/SaveLoad';
 import { ConfigHelper } from '../../helpers/configHelper';
+import { joinLabel } from '../../Constants';
 import {
     setApplicationItems,
     setIsUpdate,
@@ -296,7 +297,7 @@ function GateCalendarEditor(props: GateCalendarEditorProps): JSX.Element {
                 console.error('Invalid mission title', currentMissionName);
                 setErrorMessage(
                     !currentlySelectedApp
-                        ? 'The currently selected mission was not found in the GATE mission list.'
+                        ? joinLabel('The currently selected mission was not found in the', appConfig?.gate?.gateLabel ?? '', 'mission list.')
                         : ''
                 );
             }
@@ -851,7 +852,7 @@ function GateCalendarEditor(props: GateCalendarEditorProps): JSX.Element {
     return (
         <div style={{ marginBottom: '60px' }}>
             <Dialog open={isDeleteDialogOpen}>
-                <DialogContent>Are you sure you would like to delete this GATE Calendar Event?</DialogContent>
+                <DialogContent>{joinLabel('Are you sure you would like to delete this', appConfig?.gate?.gateLabel ?? '', 'Calendar Event?')}</DialogContent>
                 <DialogActions>
                     <RightButton color='primary' variant='contained' onClick={handleDeleteEventCancelClick}>
                         Cancel
@@ -862,7 +863,7 @@ function GateCalendarEditor(props: GateCalendarEditorProps): JSX.Element {
                 </DialogActions>
             </Dialog>
             <WidgetHeader position={'static'}>
-                <InputLabel>GATE Calendar Editor Widget</InputLabel>
+                <InputLabel>{joinLabel(appConfig?.gate?.gateLabel ?? '', 'Calendar Editor Widget')}</InputLabel>
             </WidgetHeader>
             <WidgetContainer>
                 <FieldGroup>

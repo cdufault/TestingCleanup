@@ -38,6 +38,8 @@ import { useSnackbar } from 'notistack';
 import { useAppSelector } from '@stratcom/gate/src/hooks/hooks';
 import ResetLayoutDialog from './resetLayoutDialog';
 import { IJsonModel } from 'flexlayout-react';
+import { ConfigHelper } from '../../../helpers/configHelper';
+import { joinLabel } from '../../../Constants';
 
 interface UserProps {
     portalUser: PortalUser;
@@ -255,7 +257,7 @@ const User = (props: UserProps): JSX.Element => {
                                             },
                                         }}
                                     >
-                                        IMMAD Settings
+                                        {joinLabel(ConfigHelper.getAppConfig()?.appLabel ?? '', 'Settings')}
                                     </StyledUserButton>
                                 </StyledButtonContainer>
                             </StyledSettingsButtonRow>
