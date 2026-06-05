@@ -31,10 +31,16 @@ import PopupIcon from 'calcite-ui-icons-react/PopupIcon';
 import NotepadEdit24 from '@esri/calcite-ui-icons/icons/notepad-edit-24.svg';
 import { StyledCalciteIcon } from '../menuBar/styles';
 import {IJsonModel} from "flexlayout-react";
+import { ConfigHelper } from '../../helpers/configHelper';
 
 const ToolBarIconSize = 24;
 
-export const analystTools: ToolbarTool[] = [
+export const getAnalystTools = (): ToolbarTool[] => {
+    const gateLabel = ConfigHelper.getAppConfig()?.gate?.gateLabel ?? '';
+    const gateWayLabel = `${gateLabel} WAY`.trim();
+    const gateCalendarEditorLabel = `${gateLabel} Calendar Editor`.trim();
+
+    return [
     {
         name: 'Mission Log',
         icon: <StyledCalciteIcon src={NotepadEdit24} />,
@@ -181,10 +187,10 @@ export const analystTools: ToolbarTool[] = [
         type: ToolbarToolType.AnalyticCatalog,
     },
     {
-        name: 'GATE WAY',
+        name: gateWayLabel,
         icon: <img src={GateWayIcon} alt={'GATEWAY'} style={{ width: ToolBarIconSize, height: ToolBarIconSize }} />,
         selected: false,
-        tooltip: 'GATE WAY',
+        tooltip: gateWayLabel,
         type: ToolbarToolType.GateDataEditor,
     },
     {
@@ -201,10 +207,10 @@ export const analystTools: ToolbarTool[] = [
         type: ToolbarToolType.ActivityCounts,
     },
     {
-        name: 'GATE Calendar Editor',
+        name: gateCalendarEditorLabel,
         icon: <EventIcon size={ToolBarIconSize} />,
         selected: false,
-        tooltip: 'GATE Calendar Editor',
+        tooltip: gateCalendarEditorLabel,
         type: ToolbarToolType.GateCalendarEditor,
     },
     {
@@ -228,7 +234,8 @@ export const analystTools: ToolbarTool[] = [
         tooltip: 'Display Settings',
         type: ToolbarToolType.DisplaySettings,
     },
-];
+    ];
+};
 
 export const analystLayout: IJsonModel = {
     global: {

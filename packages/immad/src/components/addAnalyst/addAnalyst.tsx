@@ -35,10 +35,9 @@ export default function AddAnalyst(props: AddAnalystProps): JSX.Element {
      * Clear out any users in the store when this loads
      */
     useEffect(() => {
-        appDispatch(updateAnalystsInTheMission(undefined));//clear users from state slice
-    },[])
+        appDispatch(updateAnalystsInTheMission(undefined)); //clear users from state slice
+    }, []);
 
-    
     useEffect(() => {
         if ((userRoles.Administrator || userRoles.MissionManager) && selectedMission !== DEFAULT_MISSION) {
             setIsEnabled(true);
@@ -51,7 +50,12 @@ export default function AddAnalyst(props: AddAnalystProps): JSX.Element {
     function handleMenuItemClick() {
         analystContent.current = (
             <div style={{ height: '98%' }}>
-                <Analysts resetAnalysts={true} groupId={portalGroupId} analystUpdateCallback={analystUpdateCallback} config={config} />
+                <Analysts
+                    resetAnalysts={true}
+                    groupId={portalGroupId}
+                    analystUpdateCallback={analystUpdateCallback}
+                    config={config}
+                />
             </div>
         );
         setDialogOpen(true);
@@ -69,14 +73,13 @@ export default function AddAnalyst(props: AddAnalystProps): JSX.Element {
      * @param portalGroupId group id
      */
     const removeUsers = async (portalGroupId: string) => {
-        try{
+        try {
             const result = await getPortalGroupUsers(portalGroupId);
             await removeUsersFromPortalGroup(portalGroupId, result.users);
-        }
-        catch(error){
+        } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     /**
      * Save the updated users and close the dialog
@@ -108,11 +111,11 @@ export default function AddAnalyst(props: AddAnalystProps): JSX.Element {
 
     return (
         <>
-            <Grid container direction='column' alignItems='center' spacing={0}>
+            <Grid container direction="column" alignItems="center" spacing={0}>
                 <Grid item xs={12}>
-                    <ButtonGroup variant='outlined' size='small' aria-label='Save'>
+                    <ButtonGroup variant="outlined" size="small" aria-label="Save">
                         <IconButton
-                            aria-label='Save'
+                            aria-label="Save"
                             onClick={handleMenuItemClick}
                             title={'Add Analyst'}
                             disabled={!isEnabled}
@@ -123,14 +126,14 @@ export default function AddAnalyst(props: AddAnalystProps): JSX.Element {
                 </Grid>
             </Grid>
 
-            <AddAnalystModalDialog open={dialogOpen} disablebackdropclick={'true'} aria-labelledby='form-dialog-title'>
+            <AddAnalystModalDialog open={dialogOpen} disablebackdropclick={'true'} aria-labelledby="form-dialog-title">
                 <AddAnalystDialogBody>
                     {analystContent.current}
                     <AddAnalystButtonContainer>
-                        <StyledButton variant='contained' color='primary' onClick={handleDialogClose}>
+                        <StyledButton variant="contained" color="primary" onClick={handleDialogClose}>
                             Cancel
                         </StyledButton>
-                        <StyledButton variant='contained' color='secondary' onClick={handleAddAnalystButtonClick}>
+                        <StyledButton variant="contained" color="secondary" onClick={handleAddAnalystButtonClick}>
                             Update Analysts
                         </StyledButton>
                     </AddAnalystButtonContainer>

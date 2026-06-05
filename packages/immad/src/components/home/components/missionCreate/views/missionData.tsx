@@ -259,7 +259,7 @@ const MissionData = (props: {
             (isEditSession && gateConfigured) || (!missionToUpdate && missionState.isImmadAdmin && gateConfigured);
         setDisplayConfigureCountsButton(shouldShow);
         if (missionToUpdate && isConfiguredForGate && missionState.gateMapType) {
-            setIsGateMissionMessage('Gate Mission');
+            setIsGateMissionMessage(`${appConfig?.gate?.gateLabel ?? ''} Mission`.trim());
         }
     }, [missionState.gateMapType, isEditSession, missionToUpdate, missionState.isImmadAdmin]);
 
@@ -374,11 +374,13 @@ const MissionData = (props: {
         }
         if (isConfiguredForGate) {
             setIsGateVariant('contained');
-            setIsGateMissionMessage('Gate Mission');
+            setIsGateMissionMessage(`${appConfig?.gate?.gateLabel ?? ''} Mission`.trim());
             setDisplayConfigureCountsButton(true);
         } else {
             setIsGateVariant('outlined');
-            setIsGateMissionMessage('Create as Gate Mission');
+            setIsGateMissionMessage(
+                `Create as ${appConfig?.gate?.gateLabel ? appConfig.gate.gateLabel + ' ' : ''}Mission`.trim()
+            );
             setDisplayConfigureCountsButton(false);
         }
     }, [isConfiguredForGate]);
@@ -721,17 +723,19 @@ const MissionData = (props: {
         isGateMissionMessage: string
     ) => {
         if (!missionToUpdate && missionState.isImmadAdmin) {
+            const gateLabel = appConfig?.gate?.gateLabel ?? '';
             return {
                 label: isGateMissionMessage,
-                title: 'Create Gate Mission',
+                title: `Create${gateLabel ? ' ' + gateLabel : ''} Mission`,
                 variant: isGateVariant,
                 show: true,
             };
         }
         if (missionToUpdate && isConfiguredForGate) {
+            const gateLabel = appConfig?.gate?.gateLabel ?? '';
             return {
-                label: 'Gate Mission',
-                title: 'Update Gate Mission',
+                label: `${gateLabel} Mission`.trim(),
+                title: `Update${gateLabel ? ' ' + gateLabel : ''} Mission`,
                 variant: 'contained' as muiButtonVariant,
                 show: true,
             };

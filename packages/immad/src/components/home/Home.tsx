@@ -63,21 +63,21 @@ const Home = (): JSX.Element => {
                 TransitionComponent={Slide}
             >
                 <ClassificationBanner />
-                <AppBar position='static' color='primary'>
+                <AppBar position="static" color="primary">
                     <Branding>
                         <Logo
                             component={'img'}
                             title={appVersion}
                             src={LogoImage}
-                            alt='US Strategic Command seal image'
+                            alt="US Strategic Command seal image"
                         />
-                        <h1>IMMAD</h1>
+                        <h1>{ConfigHelper.getAppConfig()?.appLabel ?? ''}</h1>
                     </Branding>
 
                     <AppContext.Consumer>
                         {(context) => (
                             <Grid item>
-                                <Grid container spacing={2} alignItems='center'>
+                                <Grid container spacing={2} alignItems="center">
                                     <Grid item>
                                         <User
                                             portalUser={context.portalUser}

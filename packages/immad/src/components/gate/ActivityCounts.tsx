@@ -46,8 +46,13 @@ function ActivityCounts(): JSX.Element {
         if (applicationItems && selectedMissionTitle !== '') {
             const currentlySelectedApp: any = applicationItems.find((item) => item.title === selectedMissionTitle);
             currentlySelectedApp && setSelectedAppId(currentlySelectedApp.id);
+            const gateLabel = appConfig?.gate?.gateLabel ?? '';
             setErrorMessage(
-                !currentlySelectedApp ? 'The currently selected mission was not found in the GATE mission list.' : ''
+                !currentlySelectedApp
+                    ? `The currently selected mission was not found in the${
+                          gateLabel ? ' ' + gateLabel : ''
+                      } mission list.`
+                    : ''
             );
         }
     }, [applicationItems, selectedMissionTitle]);
@@ -72,11 +77,11 @@ function ActivityCounts(): JSX.Element {
             </WidgetHeader>
 
             <FieldGroup>
-                {applicationItems.length > 0 ? <Typography variant='caption'>Select A Mission</Typography> : ''}
+                {applicationItems.length > 0 ? <Typography variant="caption">Select A Mission</Typography> : ''}
                 <InputField
                     fullWidth
-                    variant='outlined'
-                    color='secondary'
+                    variant="outlined"
+                    color="secondary"
                     select
                     required
                     error={errorMessage !== ''}

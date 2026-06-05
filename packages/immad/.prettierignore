@@ -1,0 +1,18 @@
+node_modules
+dist
+build
+coverage
+
+# Generated ANTLR sources (rebuilt by `npm run antlr`)
+src/components/classification/gen
+
+# Static config files we don't want reformatted
+src/config.json
+src/config_template.json
+src/activityCountsDef.json
+
+# Public assets
+public/assets
+
+# Lockfiles
+package-lock.json

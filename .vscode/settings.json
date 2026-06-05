@@ -1,0 +1,24 @@
+{
+    // Use Prettier as the default formatter and let it pick up the nearest
+    // .prettierrc.js (e.g. packages/immad/.prettierrc.js for files under that package).
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+
+    // Make sure all the languages we care about route through Prettier.
+    "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[scss]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[markdown]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+
+    // Resolve Prettier from package node_modules/installed prettier rather than the bundled one
+    "prettier.resolveGlobalModules": false,
+
+    // ESLint integrates with Prettier via eslint-plugin-prettier (already installed in IMMAD).
+    "eslint.format.enable": false
+}
