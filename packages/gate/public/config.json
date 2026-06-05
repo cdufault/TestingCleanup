@@ -1,42 +1,32 @@
 {
-  "portalUrl": "https://cigt-srv21.esri.tech/portal",
-  "oauthAppId": "eJX7zPL4w0tokg8H",
-  "version": "3.6.2",
-  "queryForGateApplication": "typekeywords:\"GATE\" AND type: \"Web Mapping Application\"",
-  "appPortalId": "42e9c81372bf4f1f99079837a1fb84f4",
-  "gateAdminGroupId": "4aa7597a4f7244cc90d63e3bc2b7c03f",
-  "appIsExercise": false,
-  "brandingLogoPath": "/gate/branding/",
-  "countWidgetRowColors": [
-    "silver",
-    "darkgray"
-  ],
-  "lastUpdatedFieldName": "last_edited_date",
-  "executeCountQueriesSequentially": true,
-  "useClientSideFeatures": false,
-  "clientSideDataCacheUpdateFrequencyInSeconds": 600,
-  "lightingIsEnabled": false,
-  "defaultSymbol": {
-    "size": 10,
-    "color": [
-      255,
-      0,
-      0
-    ],
-    "outline": {
-      "color": [
-        0,
-        0,
-        0
-      ],
-      "width": 1
-    }
-  },
-  "importantAnniversaryColor" : "#f50707",
-  "search": {
-    "includeGeocoder": true,
-    "name": "Internal Test Geocoder",
-    "placeholder": "example: 100 Main St",
-    "url": "https://cigt-srv21.esri.tech/server/rest/services/Whole_World_XY_CreateLocator/GeocodeServer"
-  }
+	"portalUrl": "https://cigt-srv21.esri.tech/portal",
+	"oauthAppId": "eJX7zPL4w0tokg8H",
+	"version": "3.6.2",
+	"appLabel": "GATE",
+	"queryForGateApplication": "typekeywords:\"${appLabel}\" AND type: \"Web Mapping Application\"",
+	"appPortalId": "42e9c81372bf4f1f99079837a1fb84f4",
+	"gateAdminGroupId": "4aa7597a4f7244cc90d63e3bc2b7c03f",
+	"appIsExercise": false,
+	"brandingLogoPath": "/gate/branding/",
+	"countWidgetRowColors": ["silver", "darkgray"],
+	"lastUpdatedFieldName": "last_edited_date",
+	"executeCountQueriesSequentially": true,
+	"useClientSideFeatures": false,
+	"clientSideDataCacheUpdateFrequencyInSeconds": 600,
+	"lightingIsEnabled": false,
+	"defaultSymbol": {
+		"size": 10,
+		"color": [255, 0, 0],
+		"outline": {
+			"color": [0, 0, 0],
+			"width": 1
+		}
+	},
+	"importantAnniversaryColor": "#f50707",
+	"search": {
+		"includeGeocoder": true,
+		"name": "Internal Test Geocoder",
+		"placeholder": "example: 100 Main St",
+		"url": "https://cigt-srv21.esri.tech/server/rest/services/Whole_World_XY_CreateLocator/GeocodeServer"
+	}
 }

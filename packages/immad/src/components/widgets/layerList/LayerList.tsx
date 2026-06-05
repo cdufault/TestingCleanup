@@ -257,7 +257,8 @@ const LayerList = (): JSX.Element => {
                 setIsPushLayerDialogOpen(false);
             });
         } else {
-            const message = `Error trying to push layer to mission. Mission id: ${portalGroupId} GATE application id: ${gateApplicationId},  or missing layer id: ${
+            const gateLabel = appConfig?.gate?.gateLabel ?? '';
+            const message = `Error trying to push layer to mission. Mission id: ${portalGroupId}${gateLabel} application id: ${gateApplicationId},  or missing layer id: ${
                 layerToPush ? layerToPush.id : 'undefined layer'
             }`;
             console.error(message);

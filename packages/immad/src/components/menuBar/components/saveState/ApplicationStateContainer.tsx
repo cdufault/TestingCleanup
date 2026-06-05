@@ -54,7 +54,11 @@ import { useHistory } from 'react-router-dom';
  */
 type SaveStateContainerProps = {
     portalUser: __esri.PortalUser;
-    selectedMission: { value: IItem | WorkSpaceItem; timeStamp: Date; viewType?: '2D' | '3D' };
+    selectedMission: {
+        value: IItem | WorkSpaceItem;
+        timeStamp: Date;
+        viewType?: '2D' | '3D';
+    };
 };
 
 /**
@@ -304,7 +308,9 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
      */
     useEffect(() => {
         if (finishedUpdating) {
-            enqueueSnackbar('Updated Application Data Successfully', { variant: 'success' });
+            enqueueSnackbar('Updated Application Data Successfully', {
+                variant: 'success',
+            });
         }
     }, [finishedUpdating]);
 
@@ -658,7 +664,9 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
             enqueueSnackbar('Loaded Successfully', { variant: 'success' });
         } else if (selectedMissionObject.current.value.title === DEFAULT_MISSION) {
             // set history to have theSelectedWorkspace = '';
-            enqueueSnackbar('Loaded Default Scene Successfully', { variant: 'success' });
+            enqueueSnackbar('Loaded Default Scene Successfully', {
+                variant: 'success',
+            });
         } else {
             enqueueSnackbar('Loaded Successfully', { variant: 'success' });
         }
@@ -742,7 +750,9 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
                 const mapId = (currentView.map as any).portalItem?.id;
                 if (saveLoadContext.viewSelect === DEFAULT_WORKSPACE) {
                     if (workspaceToLoad[0].portalItemId === mapId) {
-                        enqueueSnackbar('current workspace is loaded.', { variant: 'info' });
+                        enqueueSnackbar('current workspace is loaded.', {
+                            variant: 'info',
+                        });
                     } else {
                         await setClassificationRefs(workspaceToLoad[0].portalItemId);
                         await loadWorkSpaceView(workspaceToLoad[0].portalItemId);
@@ -764,7 +774,9 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
                 }
             } else {
                 saveLoadContext.setViewSelect(DEFAULT_VIEW);
-                enqueueSnackbar('No saved workspace view for this mission.', { variant: 'info' });
+                enqueueSnackbar('No saved workspace view for this mission.', {
+                    variant: 'info',
+                });
                 workspaceChanged.current = false;
                 saveLoadContext.setIsStateSaved(false);
             }
@@ -826,8 +838,11 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
         //IMMAD_Default is implemented without a group only a scene. See setMissionsInMenu()
         //hence there is no immadVersion association
         if (missionMetaData && missionMetaData.immadVersion !== appConfig.immadVersion) {
+            const appLabel = appConfig?.appLabel ?? '';
             enqueueSnackbar(
-                'The version of this IMMAD Mission does not match the current version. Edit and save the Mission to update it to the latest.',
+                `The version of this${
+                    appLabel ? ' ' + appLabel : ''
+                } Mission does not match the current version. Edit and save the Mission to update it to the latest.`,
                 { variant: 'warning' }
             );
         }
@@ -896,7 +911,7 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
             );
             // add default mission here to the front of filtered missions.
             filteredMissions.current.unshift({
-                title: 'IMMAD Default',
+                title: DEFAULT_MISSION,
                 id: appConfig.defaultWebSceneId,
             } as PortalGroup);
             missionMenuItems.current = [];
@@ -1007,9 +1022,15 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
         findPortalItemById(missionMapId).then(async (result) => {
             if (result) {
                 if (value !== 1) {
-                    enqueueSnackbar('Can not save workspaces for Gate Missions. Must save default only.', {
-                        variant: 'warning',
-                    });
+                    const gateLabel = appConfig?.gate?.gateLabel ?? '';
+                    enqueueSnackbar(
+                        `Can not save workspaces for${
+                            gateLabel ? ' ' + gateLabel : ''
+                        } Missions. Must save default only.`,
+                        {
+                            variant: 'warning',
+                        }
+                    );
                     setOpenNameDialog(false);
                     return;
                 } else {
@@ -1018,9 +1039,13 @@ export default function SaveStateContainer(props: SaveStateContainerProps): JSX.
                     return;
                 }
             } else {
-                enqueueSnackbar('Unable to find Gate Map to save to. See log for more details', {
-                    variant: 'warning',
-                });
+                const gateLabel = appConfig?.gate?.gateLabel ?? '';
+                enqueueSnackbar(
+                    `Unable to find${gateLabel ? ' ' + gateLabel : ''} Map to save to. See log for more details`,
+                    {
+                        variant: 'warning',
+                    }
+                );
                 if (result != undefined) {
                     console.error(result);
                 } else {

@@ -37,6 +37,7 @@ import SortAscendingArrowIcon from 'calcite-ui-icons-react/SortAscendingArrowIco
 import SortDescendingArrowIcon from 'calcite-ui-icons-react/SortDescendingArrowIcon';
 import XIcon from 'calcite-ui-icons-react/XIcon';
 import { StyledLink } from '../../styles';
+('');
 import {
     ClearFilterButton,
     Container,
@@ -66,8 +67,8 @@ import {
     updateRegionVisibilityFeature,
 } from '@stratcom/lib-functions';
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
-import {useAppSelector} from "../../../../hooks/hooks";
-import {setWebGlErrorMessage} from "../../../webMap/WebMapViewSlice";
+import { useAppSelector } from '../../../../hooks/hooks';
+import { setWebGlErrorMessage } from '../../../webMap/WebMapViewSlice';
 
 enum SortByValue {
     Title,
@@ -130,8 +131,7 @@ const Mission = (): JSX.Element => {
     const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
-
-        if(is2dOnlyActive) {
+        if (is2dOnlyActive) {
             enqueueSnackbar(`${webGlErrorMessage} Opening missions in 3D has been disabled.`, {
                 variant: 'warning',
                 autoHideDuration: 12000,
@@ -523,7 +523,7 @@ const Mission = (): JSX.Element => {
                         <InputGroup>
                             <DefaultBox>
                                 {!isAnalyst ? (
-                                    <Button variant='contained' color='secondary' onClick={handleToggleCreate}>
+                                    <Button variant="contained" color="secondary" onClick={handleToggleCreate}>
                                         <PlusIcon size={16} /> Create Mission
                                     </Button>
                                 ) : (
@@ -544,7 +544,7 @@ const Mission = (): JSX.Element => {
                                         },
                                     }}
                                 >
-                                    <Button variant='contained' color='secondary' onClick={defaultButtonClicked}>
+                                    <Button variant="contained" color="secondary" onClick={defaultButtonClicked}>
                                         Default Workspace
                                     </Button>
                                 </StyledLink>
@@ -562,10 +562,10 @@ const Mission = (): JSX.Element => {
                             <SortByBox>
                                 <SortByLabel>Sort By</SortByLabel>
                                 <InputField
-                                    variant='outlined'
+                                    variant="outlined"
                                     select
-                                    color='secondary'
-                                    title='Sort By'
+                                    color="secondary"
+                                    title="Sort By"
                                     value={sortBy.id}
                                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                                         handleSortChange(event.target.value);
@@ -599,8 +599,8 @@ const Mission = (): JSX.Element => {
                                     value={missionViewType}
                                     exclusive={true}
                                 >
-                                    <ToggleButton value='production'>Production</ToggleButton>
-                                    <ToggleButton value='exercise'>Exercise</ToggleButton>
+                                    <ToggleButton value="production">Production</ToggleButton>
+                                    <ToggleButton value="exercise">Exercise</ToggleButton>
                                 </ToggleButtonGroup>
                                 <ToggleButtonGroup
                                     sx={{ paddingLeft: '25px', paddingBottom: '10px' }}
@@ -608,22 +608,24 @@ const Mission = (): JSX.Element => {
                                     value={showOnlyGateMissions ? 'viewGateOnly' : 'viewAll'}
                                     exclusive={true}
                                 >
-                                    <ToggleButton value='viewGateOnly'>{'GATE'}</ToggleButton>
-                                    <ToggleButton value='viewAll'>{'ALL'}</ToggleButton>
+                                    <ToggleButton value="viewGateOnly">
+                                        {ConfigHelper.getAppConfig()?.gate?.gateLabel ?? ''}
+                                    </ToggleButton>
+                                    <ToggleButton value="viewAll">{'ALL'}</ToggleButton>
                                 </ToggleButtonGroup>
                             </Box>
                             <MissionFilterContainer>
                                 <InputField
-                                    variant='outlined'
-                                    placeholder='Filter categories'
+                                    variant="outlined"
+                                    placeholder="Filter categories"
                                     fullWidth
-                                    size='small'
-                                    color='secondary'
+                                    size="small"
+                                    color="secondary"
                                     value={filterValue}
                                     onChange={handleFilterCategories}
                                     InputProps={{
                                         endAdornment: (
-                                            <InputAdornment position='end'>
+                                            <InputAdornment position="end">
                                                 <IconButton
                                                     onClick={handleClearFilter}
                                                     disabled={filterValue.length === 0}
@@ -633,7 +635,7 @@ const Mission = (): JSX.Element => {
                                             </InputAdornment>
                                         ),
                                         startAdornment: (
-                                            <InputAdornment position='start'>
+                                            <InputAdornment position="start">
                                                 <MagnifyingGlassIcon size={16} />
                                             </InputAdornment>
                                         ),

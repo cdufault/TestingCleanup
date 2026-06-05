@@ -547,10 +547,11 @@ const WebMapView = (): JSX.Element => {
                                 .catch((error) => {
                                     console.error(error);
                                     if (error.message.includes('You do not have access to this resource:')) {
+                                        const appLabel = ConfigHelper.getAppConfig()?.appLabel ?? '';
                                         enqueueSnackbar(
                                             'Layer not shared properly: ' +
                                                 error.message +
-                                                ' Contact IMMAD Admin and Click OK to return to LandingPage',
+                                                ` Contact${appLabel ? ' ' + appLabel : ''} Admin and Click OK to return to LandingPage`,
                                             {
                                                 variant: 'error',
                                                 autoHideDuration: null,
@@ -604,10 +605,11 @@ const WebMapView = (): JSX.Element => {
                 .catch((error) => {
                     console.error(error);
                     if (error.message.includes('You do not have access to this resource:')) {
+                        const appLabel = ConfigHelper.getAppConfig()?.appLabel ?? '';
                         enqueueSnackbar(
                             'Layer not shared properly: ' +
                                 error.message +
-                                ' Contact IMMAD Admin and Click OK to return to LandingPage',
+                                ` Contact${appLabel ? ' ' + appLabel : ''} Admin and Click OK to return to LandingPage`,
                             {
                                 variant: 'error',
                                 autoHideDuration: null,

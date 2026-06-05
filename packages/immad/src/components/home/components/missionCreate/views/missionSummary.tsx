@@ -239,10 +239,11 @@ const MissionSummary = (props: {
 
     const getMissionButtonLabel = (): string => {
         const isCopy = state.missionIsCopy;
+        const gatePrefix = config?.gate?.gateLabel ?? '';
         if (isGate) {
-            if (enableCreateGateMission && isCopy) return 'Copy GATE Mission';
-            if (enableCreateGateMission && !isCopy) return 'Create GATE Mission';
-            if (enableUpdateGateMission && !isCopy) return 'Update GATE Mission';
+            if (enableCreateGateMission && isCopy) return `Copy ${gatePrefix}Mission`;
+            if (enableCreateGateMission && !isCopy) return `Create ${gatePrefix}Mission`;
+            if (enableUpdateGateMission && !isCopy) return `Update ${gatePrefix}Mission`;
         } else {
             if (enableCreate && enableUpdate && isCopy) return 'Copy Mission';
             if (enableCreate && !isCopy) return 'Create Mission';

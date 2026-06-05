@@ -1435,7 +1435,8 @@ export function validateMissionMapItem(mission: MissionState): string[] {
     const messageArray = [];
     if (mission.gateMapType !== undefined) {
         if (mission.mapItem === undefined) {
-            messageArray.push('GATE Map');
+            const gateLabel = ConfigHelper.getAppConfig()?.gate?.gateLabel ?? '';
+            messageArray.push(`${gateLabel} Map`.trim());
         }
     }
     return messageArray;

@@ -1,5 +1,6 @@
-const DEFAULT_MISSION = 'IMMAD Default';
+import { ConfigHelper } from '../helpers/configHelper';
 
+const DEFAULT_MISSION = `${ConfigHelper.getAppConfig()?.appLabel ?? ''} Default`.trim();
 const DEFAULT_VIEW = 'viewDefault';
 
 const DEFAULT_WORKSPACE = 'viewWorkspace';
