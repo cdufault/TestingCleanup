@@ -176,7 +176,7 @@ const initialState: IApplicationSlice = {
 		portalUrl: "",
 		oauthAppId: "",
 		version: "",
-		appLabel: "GATE",
+		appLabel: "",
 		basename: "",
 		countWidgetRowColors: ["silver", "darkgray"],
 		lastUpdatedFieldName: "",
