@@ -125,7 +125,7 @@ module.exports = function (_, arg) {
             }),
 
             new HtmlWebPackPlugin({
-                title: 'IMMAD',
+                title: 'J2IPD',
                 template: './public/index.ejs',
                 filename: './index.html',
                 favicon: './public/assets/favicon.ico',

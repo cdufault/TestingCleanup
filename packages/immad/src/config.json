@@ -12,11 +12,11 @@
 	"panningSpeed": 6,
 	"defaultElevationMode": "relative-to-ground",
 	"immadVersion": "3.6.2",
-	"appLabel": "IMMAD",
+	"appLabel": "J2IPD",
 	"flashGraphicColor": [255, 0, 0],
 	"gate": {
 		"gateAdminGroupId": "4aa7597a4f7244cc90d63e3bc2b7c03f",
-		"gateLabel": "GATE",
+		"gateLabel": "J2IPV",
 		"analystComments": "${gateLabel} Analyst Comments",
 		"landingPageData": "Activity Snapshot",
 		"regionSummary": "High Interest Items",

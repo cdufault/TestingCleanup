@@ -27,6 +27,8 @@ async function loadConfigs() {
     const appConfig = await ConfigHelper.loadAppConfig();
     if (!appConfig) throw new Error('App Config did not load correctly.');
 
+    document.title = appConfig.appLabel ?? '';
+
     const portalConfig = await ConfigHelper.loadAppConfigFromPortal();
     if (!portalConfig) console.warn('No portal config found. Please set it in settings.');
 

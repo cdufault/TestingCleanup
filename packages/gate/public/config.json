@@ -2,7 +2,7 @@
 	"portalUrl": "https://cigt-srv21.esri.tech/portal",
 	"oauthAppId": "eJX7zPL4w0tokg8H",
 	"version": "3.6.2",
-	"appLabel": "GATE",
+	"appLabel": "J2IPV",
 	"queryForGateApplication": "typekeywords:\"${appLabel}\" AND type: \"Web Mapping Application\"",
 	"appPortalId": "42e9c81372bf4f1f99079837a1fb84f4",
 	"gateAdminGroupId": "4aa7597a4f7244cc90d63e3bc2b7c03f",

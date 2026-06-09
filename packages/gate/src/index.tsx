@@ -66,6 +66,7 @@ async function init() {
 			const request = await fetch(configPath);
 			const appConfig = await request.json();
 			applyLabelPlaceholders(appConfig);
+			document.title = appConfig.appLabel ?? "";
 			store.dispatch(setApplicationConfig(appConfig));
 			const portalUrl = appConfig.portalUrl;
 			const oauthAppId = appConfig.oauthAppId;
