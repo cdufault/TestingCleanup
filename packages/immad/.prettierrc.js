@@ -12,6 +12,7 @@ module.exports = {
     useTabs: false,
     semi: true,
     singleQuote: true,
+    jsxSingleQuote: true,
     trailingComma: 'es5',
     bracketSpacing: true,
     endOfLine: 'auto',

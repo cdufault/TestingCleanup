@@ -58,6 +58,7 @@ import XIcon from 'calcite-ui-icons-react/XIcon';
 // Supported Feature Table Layers
 type FeatureTableLayer = FeatureLayer | SceneLayer | GeoJSONLayer | CSVLayer | WFSLayer | ImageryLayer;
 const supportedTypes: string[] = ['feature', 'imagery', 'scene', 'wfs', 'geojson', 'csv'];
+type LayerWithSublayerParent = Layer & { SUBLAYER_PARENT?: unknown };
 
 // Field names for virtual layers
 /**
@@ -110,6 +111,27 @@ const editAttribute = {
     valueType: 'type-or-category',
 } as FieldProperties;
 
+/**
+ * Returns true when the FeatureTable layer represents the same selectable layer as the current map selection.
+ *
+ * The table can be opened before a layer is selected, and some map-service sublayers are represented as generated
+ * FeatureLayer instances. Avoid matching on missing IDs, and fall back to SUBLAYER_PARENT only when both layers have it.
+ *
+ * @param tableLayer layer currently displayed in the FeatureTable
+ * @param selectedMapLayer layer that owns the current map selection
+ * @returns true when both layers represent the same selectable layer
+ */
+const layersMatch = (tableLayer: Layer | undefined, selectedMapLayer: Layer | undefined): boolean => {
+    if (!tableLayer || !selectedMapLayer) return false;
+
+    if (tableLayer.id && selectedMapLayer.id && tableLayer.id === selectedMapLayer.id) return true;
+
+    const tableSublayerParent = (tableLayer as LayerWithSublayerParent).SUBLAYER_PARENT;
+    const mapSublayerParent = (selectedMapLayer as LayerWithSublayerParent).SUBLAYER_PARENT;
+
+    return Boolean(tableSublayerParent && mapSublayerParent && tableSublayerParent === mapSublayerParent);
+};
+
 // Props Interface
 interface FeatureTableProps {
     isDocked?: boolean;
@@ -148,6 +170,10 @@ const FeatureTable = ({ isDocked }: FeatureTableProps): JSX.Element => {
     // Feature Table Instance & DOM Ref
     const featureTableRef = useRef<HTMLDivElement | null>(null);
     const saveWithoutGeometry = useRef(true);
+    const isSyncingTableSelectionFromContext = useRef(false);
+
+    // Used to decide whether map selection should hydrate the table, or table selection should update the map.
+    const selectedLayerMatchesSelectionLayer = layersMatch(selectedLayer, selectionLayer);
 
     const table: EsriFeatureTable | null = useMemo(() => {
         setIsTableLoaded(false);
@@ -236,23 +262,34 @@ const FeatureTable = ({ isDocked }: FeatureTableProps): JSX.Element => {
 
     /**
      * Synchronizes the table highlighted rows when the feature selection is changed (in non-Editing mode)
+     *
+     * This supports opening the FeatureTable after making a map selection. When the user chooses the selected map layer,
+     * the current map selection is applied to the table instead of clearing the map selection during layer change.
      */
     useEffect(() => {
         if (!isEditing && isTableLoaded) {
-            if (selectedLayer === selectionLayer) {
+            if (selectedLayerMatchesSelectionLayer) {
+                // Updating highlightIds raises the same change event as a user checkbox click; suppress that echo.
+                isSyncingTableSelectionFromContext.current = true;
                 viewModel.highlightIds.removeAll();
                 viewModel.highlightIds.addMany(featureSelection);
+                setSelectedRows([...featureSelection]);
+                Promise.resolve().then(() => {
+                    isSyncingTableSelectionFromContext.current = false;
+                });
             }
         }
-    }, [isTableLoaded, featureSelection, selectionLayer, selectedLayer, activeView]);
+    }, [isTableLoaded, featureSelection, selectedLayerMatchesSelectionLayer, activeView]);
 
     /**
      * Add the selectionChange event to the table.highlightIds
      */
     useEffect(() => {
         if (table) {
-            const handle = table.highlightIds.on('change', (e) => {
-                handleSelectionChange(e.target.items);
+            const handle = table.highlightIds.on('change', () => {
+                const selectedIds = table.highlightIds.toArray() as number[];
+                if (isSyncingTableSelectionFromContext.current) return;
+                handleSelectionChange(selectedIds);
             });
             return () => {
                 handle.remove();
@@ -262,6 +299,9 @@ const FeatureTable = ({ isDocked }: FeatureTableProps): JSX.Element => {
 
     /**
      * Updates the global selection when the selected rows are updated (in non-Editing mode)
+     *
+     * Empty table selections are only allowed to clear the map when the table is displaying the map's selected layer.
+     * This prevents opening the FeatureTable on another layer from replacing an existing map selection with nothing.
      */
     useEffect(() => {
         if (!selectedLayer || isEditing) return;
@@ -271,26 +311,21 @@ const FeatureTable = ({ isDocked }: FeatureTableProps): JSX.Element => {
         // Only update if the new selection differs from the current featureSelection
         if (arrayEquals(selectedRows, featureSelection)) return;
 
-        // Determine selection mode based on how the selection changed.
-        let mode: SelectionMode;
-        if (featureSelection.length > 0 && selectedRows.length < featureSelection.length) {
-            // The new selection is smaller, so some items were unselected.
-            mode = SelectionMode.RemoveFromSelectionSet;
-        } else if (selectedRows.length > featureSelection.length) {
-            // The new selection is larger (for instance, after a "Select All" action).
-            mode = SelectionMode.AddToSelectionSet;
-        } else {
-            // Otherwise, default to NewSelectionSet.
-            mode = SelectionMode.NewSelectionSet;
+        if (selectedRows.length === 0) {
+            if (selectedLayerMatchesSelectionLayer) {
+                clearSelection();
+            }
+            return;
         }
 
-        setSelectionData(view, selectedLayer as Layer, selectedRows, mode, false, false);
-    }, [selectedRows, isEditing, selectedLayer, selectionLayer, featureSelection]);
+        setSelectionData(view, selectedLayer as Layer, [...selectedRows], SelectionMode.NewSelectionSet, false, false);
+    }, [selectedRows, isEditing, selectedLayer, selectedLayerMatchesSelectionLayer, featureSelection]);
 
     useEffect(() => {
         setIsEditing(false);
 
-        if (selectionLayer === selectedLayer) {
+        // Keep selectedRows aligned with the current map selection when the table is showing the same logical layer.
+        if (selectedLayerMatchesSelectionLayer) {
             setSelectedRows(featureSelection);
         } else {
             setSelectedRows([]);
@@ -565,13 +600,17 @@ const FeatureTable = ({ isDocked }: FeatureTableProps): JSX.Element => {
 
     /**
      * This is a callback function passed to the LayerSelect widget which will fire just before the LayerSelect
-     * fires its change method. Current highlights need to be cleared before the new layer is loaded.
+     * fires its change method. Table-local highlights need to be cleared before the new layer is loaded.
+     *
+     * Do not clear FeatureSelectionContext here. If a map selection already exists, choosing that same layer in the
+     * FeatureTable should copy the map selection into the table after the new table layer loads.
      */
     const onBeforeLayerChange = () => {
-        if (viewModel.highlightIds.length > 0) {
-            clearSelection(); //clear selectionContext
-        }
+        isSyncingTableSelectionFromContext.current = true;
         viewModel.highlightIds.removeAll(); //clear table's viewModel
+        Promise.resolve().then(() => {
+            isSyncingTableSelectionFromContext.current = false;
+        });
     };
 
     /**
