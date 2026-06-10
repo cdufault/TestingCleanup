@@ -39,7 +39,7 @@ const MissionSearch = (props: MissionSearchProps): JSX.Element => {
 
     useEffect(() => {
         filterMissions(searchValue);
-    }, [missions]);
+    }, [missions, originalMissionCount]);
 
     useEffect(() => {
         filterMissions(searchValue);
@@ -48,7 +48,7 @@ const MissionSearch = (props: MissionSearchProps): JSX.Element => {
     const filterMissions = (searchTerm: string) => {
         const missionsArray = Array.from(missions);
         let filteredMissions = missionsArray;
-        if (searchValue !== '') {
+        if (searchTerm !== '') {
             filteredMissions = missionsArray.filter((mission) => {
                 if (mission.title.toLowerCase().includes(searchTerm.trim().toLowerCase())) {
                     return mission;

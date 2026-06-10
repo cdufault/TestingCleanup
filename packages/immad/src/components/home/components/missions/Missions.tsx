@@ -137,7 +137,7 @@ const Mission = (): JSX.Element => {
                 autoHideDuration: 12000,
             });
         }
-        getMissions(showOnlyGateMissions, typeKeywords);
+        getMissions(showOnlyGateMissions, typeKeywords, '', true);
     }, []);
 
     useEffect(() => {
@@ -177,20 +177,32 @@ const Mission = (): JSX.Element => {
     }, [treeViewState.contentCategories]);
 
     useEffect(() => {
-        if (missions.length && originalMissionCount > 0) {
+        if (originalMissionCount >= 0) {
             setMissionCount(`${missions.length} of ${originalMissionCount} Missions`);
         }
     }, [originalMissionCount, missions]);
 
-    const getMissions = async (refresh = false, typeKeywordsValue = '') => {
+    const getMissions = async (
+        gateOnly = showOnlyGateMissions,
+        typeKeywordsValue = typeKeywords,
+        categories = selectedCategories,
+        refresh = false
+    ) => {
         const missions = await getMissionList(
-            selectedCategories,
+            categories,
             sortBy.sortField,
             sortOrder,
-            showOnlyGateMissions,
+            gateOnly,
             typeKeywordsValue
         );
-        if (originalMissionCount === -1 || refresh) setOriginalMissionCount(missions.length);
+        if (originalMissionCount === -1 || refresh) {
+            const unfilteredMissions =
+                categories === ''
+                    ? missions
+                    : await getMissionList('', sortBy.sortField, sortOrder, gateOnly, typeKeywordsValue);
+
+            setOriginalMissionCount(unfilteredMissions.length);
+        }
         setMissions(missions);
     };
 
@@ -201,7 +213,7 @@ const Mission = (): JSX.Element => {
             setShowOnlyGateMissions(false);
         }
         setMissions([]);
-        getMissions(true, typeKeywords);
+        getMissions(gateOnly, typeKeywords, selectedCategories, true);
     };
 
     const clearSearch = () => {
@@ -462,11 +474,15 @@ const Mission = (): JSX.Element => {
     /**
      * Remove the current filter and apply the original/default filter
      */
-    const resetFilter = () => {
-        refreshMissions(showOnlyGateMissions, typeKeywords);
+    const resetFilter = async () => {
+        const missions = await getMissionList('', sortBy.sortField, sortOrder, showOnlyGateMissions, typeKeywords);
+
         setSelectedCategories('');
-        setMissionCount(`${originalMissionCount} of ${originalMissionCount} Missions`);
+        setMissions(missions);
+        setMissionCount(`${missions.length} of ${missions.length} Missions`);
+        setFilterApplied(false);
         setShowCategorySelectedHighlight({ show: false });
+        handleClearFilter();
         clearSearch();
     };
 
