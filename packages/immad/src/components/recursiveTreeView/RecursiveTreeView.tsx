@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import TreeItem from '@mui/lab/TreeItem/TreeItem';
 import TreeView from '@mui/lab/TreeView/TreeView';
@@ -68,26 +68,32 @@ export const filterNodes = (nodes: RenderTree[], ids: string[]): RenderTree[] =>
 const RecursiveTreeView = (props: RecursiveTreeViewProps): JSX.Element => {
     const showHighlightOnCategoryItem: ShowHighlight | undefined = props.showHighlightOnCategoryItem; //prop is a state object on caller
     const classes = useStyles();
-    const expandedNodes = useRef<string[]>(props.selectedNode ? [props.selectedNode] : props.expandedNodes ?? []);
-
-    useEffect(() => {
-        if (props.selectedNode && props.selectedNode !== '') {
-            getExpanedNodes(props.selectedNode);
+    // Collect the ids of every node that has children so the whole tree can be expanded.
+    const collectExpandableIds = (node: RenderTree, ids: string[] = []): string[] => {
+        if (Array.isArray(node.children) && node.children.length) {
+            ids.push(node.id);
+            node.children.forEach((child) => collectExpandableIds(child, ids));
         }
-    }, [props.selectedNode]);
-
-    const getExpanedNodes = (nodeId: string): void => {
-        if (props.categories) {
-            const node = props.categories.find((item: RenderTree) => {
-                return item.id === nodeId;
-            });
-            if (node?.parentId) {
-                const parentId = node.parentId;
-                expandedNodes.current = [...expandedNodes.current, parentId];
-                getExpanedNodes(parentId);
-            }
-        }
+        return ids;
     };
+
+    // Initialise the expanded set lazily from the current tree so that, on mount, the
+    // tree is ALREADY fully expanded. This is important for selection: the selected
+    // node must exist in the DOM when MUI applies the `Mui-selected` styling. If we
+    // expanded via an effect (after mount) instead, a selected child inside a still
+    // collapsed parent would not receive the highlight.
+    const [expandedNodes, setExpandedNodes] = useState<string[]>(() => collectExpandableIds(props.nodes));
+
+    // Bump a version whenever the tree (props.nodes) is rebuilt. The version is used as the
+    // TreeView key so it remounts on each rebuild. Combined with the lazy-initialised
+    // expanded state above, the remounted tree comes up fully expanded with the controlled
+    // `selected` value applied - keeping the previously selected node highlighted.
+    const treeVersion = useRef(0);
+    const previousNodes = useRef(props.nodes);
+    if (previousNodes.current !== props.nodes) {
+        previousNodes.current = props.nodes;
+        treeVersion.current += 1;
+    }
 
     const renderTree = (nodes: RenderTree) => (
         <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.name}>
@@ -96,16 +102,17 @@ const RecursiveTreeView = (props: RecursiveTreeViewProps): JSX.Element => {
     );
 
     const handleToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
-        expandedNodes.current = nodeIds.length !== 0 ? nodeIds : [];
+        setExpandedNodes(nodeIds);
     };
 
     const showHighlight = showHighlightOnCategoryItem?.show === undefined ? true : showHighlightOnCategoryItem?.show;
     return (
         <TreeView
+            key={treeVersion.current}
             className={`${showHighlight ? classes.root : classes.rootNoHighlight}`}
             defaultExpandIcon={<CaretRightIcon />}
             defaultCollapseIcon={<CaretDownIcon />}
-            expanded={expandedNodes.current}
+            expanded={expandedNodes}
             onNodeSelect={props.handleSelect}
             onNodeToggle={handleToggle}
             selected={props.selectedNode}

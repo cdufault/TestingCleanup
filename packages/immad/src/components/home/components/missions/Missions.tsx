@@ -99,6 +99,7 @@ const Mission = (): JSX.Element => {
     const [filterValue, setFilterValue] = useState('');
     const [missionCount, setMissionCount] = useState<string>();
     const [showCategorySelectedHighlight, setShowCategorySelectedHighlight] = useState<ShowHighlight>({ show: false });
+    const [selectedCategoryNodeId, setSelectedCategoryNodeId] = useState<string>('');
     const [originalMissionCount, setOriginalMissionCount] = useState(-1);
 
     const is2dOnlyActive = useAppSelector((state) => state.webMapViewSlice.is2dOnlyActive);
@@ -149,12 +150,14 @@ const Mission = (): JSX.Element => {
     useEffect(() => {
         if (typeKeywords !== '') {
             refreshMissions(showOnlyGateMissions, typeKeywords);
+            // Recompute the category counts so the tree numbers reflect the
+            // currently selected GATE-only / production-vs-exercise filters.
+            getContentCategories(reducerDispatch, showOnlyGateMissions, typeKeywords);
         }
     }, [typeKeywords]);
 
     useEffect(() => {
         getCurrentUser();
-        getContentCategories(reducerDispatch, showOnlyGateMissions, typeKeywords);
     }, []);
 
     useEffect(() => {
@@ -166,11 +169,13 @@ const Mission = (): JSX.Element => {
     useEffect(() => {
         setMissionCount(`${missions.length} of ${missions.length} Missions`);
         if (treeViewState.contentCategories && treeViewState.contentCategories.categorySchema.length) {
+            // Pass fresh arrays so the tree is rebuilt from scratch on each refresh
+            // (createTreeView pushes onto these, which would otherwise accumulate/duplicate).
             createTreeView(
                 treeViewState.contentCategories.categorySchema[0],
                 treeViewState.categoryCount,
-                treeViewState.flattenedCategories,
-                treeViewState.nodeIds,
+                [],
+                [],
                 reducerDispatch
             );
         }
@@ -453,6 +458,7 @@ const Mission = (): JSX.Element => {
      */
     const onChangeCategory = async (event: React.SyntheticEvent, nodeId: string) => {
         setShowCategorySelectedHighlight({ show: true });
+        setSelectedCategoryNodeId(nodeId);
         const category: RenderTree | undefined = treeViewState.flattenedCategories.find((x) => x.id === nodeId);
 
         const sortField = sortBy ? sortBy.sortField : 'title';
@@ -482,6 +488,7 @@ const Mission = (): JSX.Element => {
         setMissionCount(`${missions.length} of ${missions.length} Missions`);
         setFilterApplied(false);
         setShowCategorySelectedHighlight({ show: false });
+        setSelectedCategoryNodeId('');
         handleClearFilter();
         clearSearch();
     };
@@ -498,7 +505,10 @@ const Mission = (): JSX.Element => {
      * @param viewTypeFilter 'viewAll' or 'viewGateOnly'
      */
     function handleMissionTypeInputChange(event: React.MouseEvent<HTMLElement>, viewTypeFilter: string | null) {
-        viewTypeFilter && setShowOnlyGateMissions(viewTypeFilter !== 'viewAll');
+        if (viewTypeFilter) {
+            clearCategorySelection();
+            setShowOnlyGateMissions(viewTypeFilter !== 'viewAll');
+        }
     }
 
     /**
@@ -507,7 +517,19 @@ const Mission = (): JSX.Element => {
      * @param viewTypeFilter type of missions to view 'production' or 'exercise'
      */
     function missionViewTypeChanged(event: React.MouseEvent<HTMLElement>, viewTypeFilter: string | null) {
-        viewTypeFilter && setMissionViewType(viewTypeFilter);
+        if (viewTypeFilter) {
+            clearCategorySelection();
+            setMissionViewType(viewTypeFilter);
+        }
+    }
+
+    /**
+     * Clear any selected category in the tree so toggling a button starts with no selection.
+     */
+    function clearCategorySelection() {
+        setSelectedCategories('');
+        setSelectedCategoryNodeId('');
+        setShowCategorySelectedHighlight({ show: false });
     }
 
     /**
@@ -663,6 +685,7 @@ const Mission = (): JSX.Element => {
                                     nodes={treeViewState.filteredCategoryTree}
                                     handleSelect={onChangeCategory}
                                     expandedNodes={treeViewState.nodeIds}
+                                    selectedNode={selectedCategoryNodeId}
                                     showHighlightOnCategoryItem={showCategorySelectedHighlight}
                                 />
                             </MissionCategoryContainer>
