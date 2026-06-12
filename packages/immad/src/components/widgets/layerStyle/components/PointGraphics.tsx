@@ -1,5 +1,5 @@
 // React imports
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
+import React, { ChangeEvent, useContext, useEffect, useRef, useState } from 'react';
 import {
     Button,
     FormControlLabel,
@@ -43,6 +43,7 @@ import EsriSymbolModal from './EsriSymbolModal';
 import ListButtonIcon from 'calcite-ui-icons-react/ListButtonIcon';
 import { setSelectedWebStyleObject, setStyleSelectionType } from '../WebStylesSlice';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { MapContext } from '../../../../contexts/Map';
 import colorRamps = require('@arcgis/core/smartMapping/symbology/support/colorRamps');
 import Field = __esri.Field;
 import PointSymbol3DProperties = __esri.PointSymbol3DProperties;
@@ -53,7 +54,11 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
     const { onChange, originalRenderer, layer } = props;
     const dispatch = useAppDispatch();
     const { enqueueSnackbar } = useSnackbar();
-    const [markerType, setMarkerType] = useState<string>('3d');
+    // The map view dictates which symbol dimensionality is valid. 3D symbols cannot be applied
+    // while the map is in 2D ('MAP'), so default the marker type to match the current view to
+    // avoid loading 3D objects (and erroring) in a 2D map.
+    const { activeView } = useContext(MapContext);
+    const [markerType, setMarkerType] = useState<string>(activeView === 'MAP' ? '2d' : '3d');
     const selectedWebStyleType = useAppSelector((state) => state.webStylesSlice.selectedWebStyleType);
     const styleSelectionType = useAppSelector((state) => state.webStylesSlice.styleSelectionType);
     const [twoDPointObject, setTwoDPointObject] = useState<any>(PointStyleEnum.circle);
@@ -75,9 +80,15 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
     const [threeDObjectWidth, setThreeDObjectWidth] = useState<number>(10000);
     const [visualRotationVariable, setVisualRotationVariable] = useState<RotationVariable>();
     const previewRef = useRef<HTMLDivElement | null>(null);
+    // True while seeding state from the layer's saved renderer (on mount or when the selected
+    // layer changes). While true the queryFeatures / color-ramp recolor effects are suppressed so
+    // they don't clobber the restored symbols and blocks. User-driven changes clear this flag.
+    const isRestoringRef = useRef<boolean>(true);
 
     const [colorRampMenuItems, setColorRampMenuItems] = useState<JSX.Element[]>();
-    const [selectedAttributeId, setSelectedAttributeId] = useState<string | undefined>();
+    // Initialize to '' (not undefined) so the Attribute Field Select is controlled for the whole
+    // component lifetime; switching from undefined -> string makes MUI drop the selected value.
+    const [selectedAttributeId, setSelectedAttributeId] = useState<string>('');
     const [selectedColorRampId, setSelectedColorRampId] = useState<string | undefined>('none');
     const [uniqueValueBlocks, setUniqueValueBlocks] = useState<UniqueValueBlockProps[]>();
     const [rampColorTag, setRampColorTag] = useState<string>('');
@@ -89,7 +100,12 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
     const [selected3dWebStyleType, setSelected3dWebStyleType] = useState<string>('');
     const [showPreview, setShowPreview] = useState<boolean>(false);
 
-    useEffect(() => {
+    const loadOriginalRenderer = () => {
+        // Suppress the auto-rebuild effects (queryFeatures / color-ramp recolor) while we seed
+        // state from the saved renderer so they don't clobber the restored symbols and blocks.
+        isRestoringRef.current = true;
+
+        let foundRotation = false;
         if (originalRenderer && (originalRenderer as SimpleRenderer).visualVariables) {
             // Find a rotation visual variable, if any exists
             const rotationVariable: RotationVariable = (originalRenderer as SimpleRenderer).visualVariables.find(
@@ -99,8 +115,13 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
             if (rotationVariable) {
                 setSelectedFieldId(rotationVariable.field);
                 setUseGeoRotMethod(rotationVariable.rotationType === 'geographic');
+                foundRotation = true;
             }
         }
+        if (!foundRotation) {
+            setSelectedFieldId('none');
+        }
+
         if (originalRenderer && originalRenderer.type === 'simple') {
             const oRenderer = originalRenderer as SimpleRenderer;
             if (oRenderer.symbol.type === 'simple-marker') {
@@ -113,7 +134,7 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                     setTwoDBorderColor(symbol.outline.color.toHex());
                 }
                 setMarkerType('2d');
-            } else if (oRenderer && oRenderer.symbol.type === 'point-3d') {
+            } else if (oRenderer.symbol.type === 'point-3d') {
                 const symbol = oRenderer.symbol as PointSymbol3D;
                 if (symbol.symbolLayers && symbol.symbolLayers.length > 0) {
                     if (symbol.symbolLayers.getItemAt(0).type === 'object') {
@@ -124,16 +145,15 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                         if (symbolLayer.material && symbolLayer.material.color) {
                             setThreeDObjectColor(symbolLayer.material.color.toHex());
                         }
-                        if (symbolLayer.resource.primitive) {
-                            setThreeDPointObject({
-                                name: symbolLayer.resource.primitive,
-                                styleUrl: symbol.styleOrigin?.styleUrl,
-                            });
-                        }
                         if (symbolLayer.resource.href) {
                             setThreeDPointObject({
                                 name: symbolLayer.resource.href,
                                 href: symbolLayer.resource.href,
+                                styleUrl: symbol.styleOrigin?.styleUrl,
+                            });
+                        } else if (symbolLayer.resource.primitive) {
+                            setThreeDPointObject({
+                                name: symbolLayer.resource.primitive,
                                 styleUrl: symbol.styleOrigin?.styleUrl,
                             });
                         }
@@ -141,41 +161,96 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                 }
                 setMarkerType('3d');
             }
-        }
-
-        if (originalRenderer.type === 'unique-value' && (originalRenderer as UniqueValueRenderer).field) {
-            setSelectedAttributeId((originalRenderer as UniqueValueRenderer).field);
+            // A simple renderer is location-based. Switch to location mode and clear any
+            // attribute-mode blocks left over from a previously selected layer, but keep a default
+            // attribute field so switching to attribute mode still has a selection.
+            dispatch(setStyleSelectionType('location'));
+            setUniqueValueBlocks(undefined);
+            setSelectedAttributeId(layer.fields.length > 1 ? layer.fields[1].name : '');
+            // Seed ramp defaults so that switching to attribute mode has the Dark/Light shade and
+            // a color ramp selected (otherwise queryFeatures bails on the 'none' ramp and no
+            // per-value style rows are produced).
+            setRampShade('dark');
+            setRampColorTag('blues');
+        } else if (originalRenderer.type === 'unique-value' && (originalRenderer as UniqueValueRenderer).field) {
+            const uniqueRenderer = originalRenderer as UniqueValueRenderer;
             dispatch(setStyleSelectionType('attribute'));
-            loadOriginalUniqueRenderer(originalRenderer as UniqueValueRenderer, layer, setUniqueValueBlocks);
+            // Resolve the renderer's field against the layer's fields so the value exactly matches
+            // an Attribute Field menu item. The renderer can store the field with different casing
+            // than layer.fields[].name, and MUI Select matches case-sensitively - a mismatch would
+            // leave the dropdown blank even though the field is valid.
+            const rendererField = uniqueRenderer.field;
+            const matchedField = layer.fields?.find(
+                (field) => field.name.toLowerCase() === rendererField.toLowerCase()
+            );
+            setSelectedAttributeId(matchedField ? matchedField.name : rendererField);
+
+            // Derive the marker type (and 3D object) from the saved symbols so a 3D object such as
+            // a cylinder reloads as 3D rather than defaulting to a 2D/sphere primitive.
+            const firstSymbol = uniqueRenderer.uniqueValueInfos?.[0]?.symbol;
+            if (firstSymbol?.type === 'point-3d') {
+                setMarkerType('3d');
+                const firstSymbolLayer = (firstSymbol as PointSymbol3D).symbolLayers?.getItemAt(0) as
+                    | ObjectSymbol3DLayer
+                    | undefined;
+                const firstResource = firstSymbolLayer?.resource;
+                if (firstResource?.href) {
+                    setThreeDPointObject({
+                        name: firstResource.href,
+                        href: firstResource.href,
+                        styleUrl: (firstSymbol as PointSymbol3D).styleOrigin?.styleUrl,
+                    });
+                } else if (firstResource?.primitive) {
+                    setThreeDPointObject({
+                        name: firstResource.primitive,
+                        styleUrl: (firstSymbol as PointSymbol3D).styleOrigin?.styleUrl,
+                    });
+                }
+                if (firstSymbolLayer?.width) {
+                    setThreeDObjectWidth(firstSymbolLayer.width);
+                }
+            } else if (firstSymbol?.type === 'simple-marker') {
+                setMarkerType('2d');
+            }
+
+            // The exact color ramp can't be recovered from a renderer, so seed sensible defaults
+            // to keep the Color Ramp dropdown populated instead of blank on reload.
+            setRampShade('dark');
+            setRampColorTag('blues');
+            loadOriginalUniqueRenderer(uniqueRenderer, layer, setUniqueValueBlocks);
         } else if (layer.fields.length > 1) {
             setSelectedAttributeId(layer.fields[1].name);
-            setRampShade('light');
-            setRampColorTag('reds');
-        }
-    }, []);
-
-    useEffect(() => {
-        if (layer.fields.length > 1) {
-            try {
-                setSelectedAttributeId(layer.fields[1].name);
-            } catch {
-                //if the available field isn't in the attribute list set it to undefined
-                setSelectedAttributeId(undefined);
-            }
+            setRampShade('dark');
+            setRampColorTag('blues');
         } else {
-            setSelectedAttributeId(undefined);
+            setSelectedAttributeId('');
         }
+    };
+
+    // Restore UI state from the layer's existing renderer on mount and whenever the selected
+    // layer changes, so switching layers (and switching back) re-populates field, marker type,
+    // 3D object, color ramp and per-value blocks from what was previously applied.
+    useEffect(() => {
+        loadOriginalRenderer();
     }, [layer]);
 
     useEffect(() => {
         if (rampColorTag && rampShade) {
             const colorMenuItems = getColorRampMenuItems(rampColorTag, rampShade);
             setColorRampMenuItems(colorMenuItems);
-            setSelectedColorRampId(colorMenuItems[0].props.value);
+            if (colorMenuItems.length > 0) {
+                setSelectedColorRampId(colorMenuItems[0].props.value);
+            } else {
+                setSelectedColorRampId('none');
+            }
         }
     }, [rampColorTag, rampShade]);
 
     useEffect(() => {
+        // Skip while restoring from the saved renderer; loadOriginalRenderer owns the blocks then.
+        if (isRestoringRef.current) {
+            return;
+        }
         queryFeatures();
     }, [selectedAttributeId, markerType, styleSelectionType, layer]);
 
@@ -189,6 +264,10 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
     }, [selectedWebStyleType]);
 
     useEffect(() => {
+        // Skip while restoring so we don't recolor (and lose) the restored per-value symbols.
+        if (isRestoringRef.current) {
+            return;
+        }
         if (selectedColorRampId && selectedColorRampId !== 'none' && uniqueValueBlocks) {
             const colorRamp = colorRamps.byName(selectedColorRampId).colors;
             const newUniqueValueBlocks: UniqueValueBlockProps[] = [];
@@ -217,9 +296,20 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                     newUniqueValueBlocks.push(uvProp);
                 } else {
                     //3d symbol
+                    const oldSymbol = uniqueValueBlocks[index].uniqueValueInfo.symbol as PointSymbol3D;
+                    const oldSymbolLayer = oldSymbol.symbolLayers?.getItemAt(0) as ObjectSymbol3DLayer | undefined;
+                    const oldResource = oldSymbolLayer?.resource;
                     const newResource: ObjectSymbol3DLayerResource = {};
-                    newResource.href =
-                        uniqueValueBlocks[index].uniqueValueInfo.symbol.symbolLayers.items[0].resource.href;
+                    // Preserve the original resource type: primitives use `primitive`, web-style
+                    // symbols use `href`. Copying only href would drop primitive shapes and
+                    // produce an empty resource that fails to render.
+                    if (oldResource?.href) {
+                        newResource.href = oldResource.href;
+                    } else if (oldResource?.primitive) {
+                        newResource.primitive = oldResource.primitive;
+                    } else {
+                        newResource.primitive = 'sphere';
+                    }
                     if (colorIndex >= colorRamp.length) {
                         colorIndex = 0;
                     }
@@ -228,15 +318,15 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                     const newSymbolLayer = {
                         type: 'object',
                         resource: newResource,
-                        width: uniqueValueBlocks[index].uniqueValueInfo.symbol.symbolLayers.items[0].width,
+                        width: oldSymbolLayer?.width,
                         height: undefined,
                         depth: undefined,
                         material: { color: newColor },
                     };
 
                     const styleOrigin = {
-                        styleUrl: uniqueValueBlocks[index].uniqueValueInfo.symbol.styleOrigin.styleUrl,
-                        name: uniqueValueBlocks[index].uniqueValueInfo.symbol.styleOrigin.name,
+                        styleUrl: oldSymbol.styleOrigin?.styleUrl,
+                        name: oldSymbol.styleOrigin?.name ?? newResource.primitive,
                     } as Symbol3DStyleOrigin;
 
                     uniqueValueInfo.symbol = new PointSymbol3D({
@@ -469,10 +559,15 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                             //if not 2d then it is 3d
                             const newResource: ObjectSymbol3DLayerResource = {};
 
+                            // Fall back to the `sphere` primitive when no symbol has been chosen
+                            // yet (e.g. just switched to 3D). Otherwise the resource is empty and
+                            // the per-row Point Style dropdown has no default value to show.
                             if (threeDPointObject.href) {
                                 newResource.href = threeDPointObject.href;
                             } else if (threeDPointObject.name) {
                                 newResource.primitive = threeDPointObject.name;
+                            } else {
+                                newResource.primitive = 'sphere';
                             }
                             const newColor = colorRamp[index % colorRamp.length];
                             const newSymbolLayer = {
@@ -573,6 +668,7 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
      * @param event change event
      */
     const markerTypeChanged = (event: ChangeEvent<HTMLInputElement>) => {
+        isRestoringRef.current = false;
         const selectedType = event.target.value;
         setMarkerType(selectedType);
     };
@@ -583,7 +679,10 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                 <RadioGroup
                     row
                     value={styleSelectionType}
-                    onChange={(_evt, val) => dispatch(setStyleSelectionType(val as SelectionType))}
+                    onChange={(_evt, val) => {
+                        isRestoringRef.current = false;
+                        dispatch(setStyleSelectionType(val as SelectionType));
+                    }}
                 >
                     <FormControlLabel value={'location'} control={<Radio />} label={'Show Location Only'} />
                     <FormControlLabel value={'attribute'} control={<Radio />} label={'Visualize Attribute'} />
@@ -777,6 +876,7 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                         title='Attribute Field'
                         value={selectedAttributeId}
                         onChange={(event) => {
+                            isRestoringRef.current = false;
                             setSelectedAttributeId(event.target.value);
                         }}
                     >
@@ -800,7 +900,14 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                             })}
                     </InputField>
                     <FieldGroup>
-                        <RadioGroup row value={rampShade} onChange={(_evt, val) => setRampShade(val)}>
+                        <RadioGroup
+                            row
+                            value={rampShade}
+                            onChange={(_evt, val) => {
+                                isRestoringRef.current = false;
+                                setRampShade(val);
+                            }}
+                        >
                             <FormControlLabel value={'dark'} control={<Radio />} label={'Dark'} />
                             <FormControlLabel value={'light'} control={<Radio />} label={'Light'} />
                         </RadioGroup>
@@ -811,6 +918,7 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                             title={'Color Ramp Tags'}
                             value={rampColorTag}
                             onChange={(event) => {
+                                isRestoringRef.current = false;
                                 setRampColorTag(event.target.value);
                             }}
                         >
@@ -827,6 +935,7 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                             title={'Color Ramps'}
                             value={selectedColorRampId}
                             onChange={(event) => {
+                                isRestoringRef.current = false;
                                 setSelectedColorRampId(event.target.value);
                             }}
                         >
@@ -844,6 +953,7 @@ const PointGraphics = (props: PointGraphicsProps): JSX.Element => {
                             title={'Marker Type'}
                             value={markerType}
                             onChange={(event) => {
+                                isRestoringRef.current = false;
                                 setMarkerType(event.target.value as '2d' | '3d');
                             }}
                         >

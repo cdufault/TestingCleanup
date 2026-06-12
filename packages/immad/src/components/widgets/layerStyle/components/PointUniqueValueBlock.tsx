@@ -57,9 +57,16 @@ const PointUniqueValueBlock = (props: PointUniqueValueBlockProps): JSX.Element =
                     name: 'sphere',
                 } as PointObject3D;
                 if (uniqueValueInfo.symbol) {
+                    const symbolLayer = uniqueValueInfo.symbol.symbolLayers?.items[0];
+                    const resource = symbolLayer?.resource;
+                    // Primitives (sphere, cube, diamond, ...) store their identity in
+                    // `resource.primitive`, while web-style symbols use `resource.href` +
+                    // `styleOrigin`. On reload `styleOrigin` is often stripped for primitives,
+                    // so we must read `resource.primitive` or the name is lost and an empty
+                    // resource gets built (causing "a graphic has no symbol" render errors).
                     baseMarkerType = {
-                        name: uniqueValueInfo.symbol.styleOrigin?.name,
-                        href: uniqueValueInfo.symbol.symbolLayers?.items[0]?.resource.href,
+                        name: resource?.primitive ?? uniqueValueInfo.symbol.styleOrigin?.name ?? 'sphere',
+                        href: resource?.href,
                         styleUrl: uniqueValueInfo.symbol.styleOrigin?.styleUrl,
                     };
                 }
@@ -89,6 +96,10 @@ const PointUniqueValueBlock = (props: PointUniqueValueBlockProps): JSX.Element =
                 newResource.href = threeDPointObject.href;
             } else if (threeDPointObject.name) {
                 newResource.primitive = threeDPointObject.name;
+            } else {
+                // Never leave the resource empty - that produces a symbol that won't render
+                // ("a graphic has no symbol"). Fall back to the default primitive.
+                newResource.primitive = 'sphere';
             }
 
             const newSymbolLayer = {

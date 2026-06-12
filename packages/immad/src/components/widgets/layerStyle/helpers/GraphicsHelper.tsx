@@ -153,27 +153,24 @@ export const loadOriginalUniqueRenderer = async (
         const uniqueValueInfos = originalRenderer.uniqueValueInfos;
         const results = await queryLayerStatistics(layer, originalRenderer.field);
         const outStatisticsCountFieldName = `${originalRenderer.field}_count`;
+
+        // Build a value -> count lookup from the query stats. Keys are coerced to strings so an
+        // integer classification code matches a string renderer value (and vice versa).
+        const countByValue = new Map<string, string>();
         for (let index = 0; index < results.features.length; index++) {
             const featureValue = results.features[index].attributes[originalRenderer.field];
-            let matchedInfo: UniqueValueInfo | undefined;
-            for (let k = 0; k < uniqueValueInfos.length; k++) {
-                // Compare with type coercion: the renderer's `value` is often a string while
-                // the feature attribute (e.g. an integer classification code) is a number, so a
-                // strict === comparison would never match and the row would render empty.
-                if (
-                    uniqueValueInfos[k].value === featureValue ||
-                    String(uniqueValueInfos[k].value) === String(featureValue)
-                ) {
-                    matchedInfo = uniqueValueInfos[k];
-                    break;
-                }
-            }
-            // Fall back to a fresh info carrying the feature's value so the row still shows the
-            // value when the renderer has no matching entry, instead of reusing a stale/empty one.
-            const uniqueValueInfo = matchedInfo ?? new UniqueValueInfo({ value: featureValue });
+            const count = results.features[index].attributes[outStatisticsCountFieldName];
+            countByValue.set(String(featureValue), count);
+        }
+
+        // Iterate the renderer's own uniqueValueInfos so every row keeps the symbol that was
+        // actually applied (e.g. a cylinder). Iterating features instead and matching back to the
+        // renderer risked producing symbol-less rows that fell back to the default sphere.
+        for (let k = 0; k < uniqueValueInfos.length; k++) {
+            const info = uniqueValueInfos[k];
             const uvProp = {
-                fieldCount: results.features[index].attributes[outStatisticsCountFieldName],
-                uniqueValueInfo: uniqueValueInfo,
+                fieldCount: countByValue.get(String(info.value)) ?? '0',
+                uniqueValueInfo: info,
             };
             uniqueValueBlockProps.push(uvProp);
         }

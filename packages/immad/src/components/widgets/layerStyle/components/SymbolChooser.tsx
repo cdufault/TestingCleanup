@@ -3,7 +3,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { InputField } from '../../../common';
 import { getStratComSymbolSet, StratcomSymbol } from '../helpers/SymbolChooserHelper';
-import { LogHelper } from '../../../../helpers/logHelper';
 import { StyledSymbolImage, StyledSymbolPaper, StyledSymbolText } from '../styles';
 import { PointObject3D } from '../helpers/GraphicsHelper';
 import { MapContext } from '../../../../contexts/Map';
@@ -38,9 +37,15 @@ const SymbolChooser = (props: SymbolChooserProps): JSX.Element => {
     function handle3DSymbolErrorIn2DView(): void {
         //whenever the active view of the webmap is MAP or 2D, a snackbar error message will appear
         if (activeView === 'MAP') {
-            enqueueSnackbar('Cannot set 3D symbols while in 2D map view', { variant: 'error' });
+            // Each unique-value row renders its own SymbolChooser, so without deduping this fires
+            // once per row. A stable key + preventDuplicate ensures the user only sees it once.
+            enqueueSnackbar('Cannot set 3D symbols while in 2D map view', {
+                variant: 'error',
+                key: 'cannot-set-3d-symbol-in-2d-view',
+                preventDuplicate: true,
+            });
             //putting an error log in the console
-            LogHelper.log('Cannot set 3D symbols while in 2D map view', true);
+            console.error('Cannot set 3D symbols while in 2D map view');
         }
     }
     //runs function check every time the active view updates
@@ -54,7 +59,7 @@ const SymbolChooser = (props: SymbolChooserProps): JSX.Element => {
                 setStratcomSymbols(symbolsSet);
             })
             .catch((error) => {
-                LogHelper.log(error, true);
+                console.error(error);
                 setStratcomSymbols([]);
             });
     }, []);
