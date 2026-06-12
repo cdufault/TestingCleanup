@@ -151,15 +151,26 @@ export const loadOriginalUniqueRenderer = async (
     if (originalRenderer.field && layer.type !== 'stream') {
         const uniqueValueBlockProps: UniqueValueBlockProps[] = [];
         const uniqueValueInfos = originalRenderer.uniqueValueInfos;
-        let uniqueValueInfo = new UniqueValueInfo();
         const results = await queryLayerStatistics(layer, originalRenderer.field);
         const outStatisticsCountFieldName = `${originalRenderer.field}_count`;
         for (let index = 0; index < results.features.length; index++) {
-            for (let k = 0; k < originalRenderer.uniqueValueInfos.length; k++) {
-                if (uniqueValueInfos[k].value === results.features[index].attributes[originalRenderer.field]) {
-                    uniqueValueInfo = uniqueValueInfos[k];
+            const featureValue = results.features[index].attributes[originalRenderer.field];
+            let matchedInfo: UniqueValueInfo | undefined;
+            for (let k = 0; k < uniqueValueInfos.length; k++) {
+                // Compare with type coercion: the renderer's `value` is often a string while
+                // the feature attribute (e.g. an integer classification code) is a number, so a
+                // strict === comparison would never match and the row would render empty.
+                if (
+                    uniqueValueInfos[k].value === featureValue ||
+                    String(uniqueValueInfos[k].value) === String(featureValue)
+                ) {
+                    matchedInfo = uniqueValueInfos[k];
+                    break;
                 }
             }
+            // Fall back to a fresh info carrying the feature's value so the row still shows the
+            // value when the renderer has no matching entry, instead of reusing a stale/empty one.
+            const uniqueValueInfo = matchedInfo ?? new UniqueValueInfo({ value: featureValue });
             const uvProp = {
                 fieldCount: results.features[index].attributes[outStatisticsCountFieldName],
                 uniqueValueInfo: uniqueValueInfo,

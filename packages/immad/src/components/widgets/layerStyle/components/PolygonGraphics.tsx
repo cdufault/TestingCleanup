@@ -54,8 +54,8 @@ const PolygonGraphics = (props: GraphicsProps): JSX.Element => {
     const [selectedAttributeId, setSelectedAttributeId] = useState<string | undefined>();
     const [selectedColorRampId, setSelectedColorRampId] = useState<string | undefined>();
     const [uniqueValueBlocks, setUniqueValueBlocks] = useState<UniqueValueBlockProps[]>();
-    const [rampColorTag, setRampColorTag] = useState<string>();
-    const [rampShade, setRampShade] = useState<string>();
+    const [rampColorTag, setRampColorTag] = useState<string>('blues');
+    const [rampShade, setRampShade] = useState<string>('dark');
     const [displayBlocks, setDisplayBlocks] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
@@ -67,7 +67,7 @@ const PolygonGraphics = (props: GraphicsProps): JSX.Element => {
         } else if (layer.fields.length > 1) {
             setSelectedAttributeId(layer.fields[1].name);
             setRampShade('light');
-            setRampColorTag('reds');
+            setRampColorTag('blues');
         }
     }, []);
 
@@ -468,7 +468,7 @@ const PolygonGraphics = (props: GraphicsProps): JSX.Element => {
                             select
                             color='secondary'
                             title={'Color Ramp Tags'}
-                            value={rampColorTag}
+                            value={rampColorTag ?? ''}
                             onChange={(event) => {
                                 setRampColorTag(event.target.value);
                             }}

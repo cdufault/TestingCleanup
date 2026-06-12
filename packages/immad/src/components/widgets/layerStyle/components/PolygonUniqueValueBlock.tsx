@@ -26,9 +26,10 @@ type styleType =
 const PolygonUniqueValueBlock = (props: UniqueValueBlockProps): JSX.Element => {
     const { onChange, fieldCount, uniqueValueInfo } = props;
 
-    const [selectedColor, setSelectedColor] = useState<string>(uniqueValueInfo.symbol.color.toHex());
-    const [selectedStyle, setSelectedStyle] = useState<styleType>(uniqueValueInfo.symbol.style);
-    const [selectedTransparency, setSelectedTransparency] = useState<number>(1);
+    const symbol = uniqueValueInfo.symbol as SimpleFillSymbol | null;
+    const [selectedColor, setSelectedColor] = useState<string>(symbol?.color?.toHex() ?? '#000000');
+    const [selectedStyle, setSelectedStyle] = useState<styleType>((symbol?.style as styleType) ?? 'solid');
+    const [selectedTransparency, setSelectedTransparency] = useState<number>(symbol?.color?.a ?? 1);
 
     useEffect(() => {
         const newUniqueValueInfo = new UniqueValueInfo();
