@@ -264,6 +264,51 @@ export async function deletePortalGroup(groupId: string): Promise<boolean> {
 }
 
 /**
+ * Resolve a portal group id from a portal "group query" string.
+ *
+ * The portal `self/webstyles` response returns group queries in several shapes,
+ * e.g. `id:<guid>`, `id: <guid>`, a bare `<guid>`, or `title:"Esri Styles" AND owner:esri_en`.
+ * A naive `split(':')` only handles the simplest `id:<guid>` form and silently returns
+ * nothing for the (default) title/owner form - which causes the styles group to never load.
+ * This resolver extracts an id directly when present, otherwise resolves the group via a
+ * portal group search using the raw query string.
+ * @param query the portal group query string
+ * @returns the resolved group id, or '' if it could not be resolved
+ */
+export async function resolveGroupIdFromQuery(query: string): Promise<string> {
+    if (!query) {
+        return '';
+    }
+    const trimmed = query.trim();
+
+    // Fast path: an explicit `id:<guid>` clause or a bare guid token.
+    const idMatch = trimmed.match(/(?:\bid\s*:\s*)([0-9a-fA-F]{20,})\b/) ?? trimmed.match(/^([0-9a-fA-F]{20,})$/);
+    if (idMatch) {
+        return idMatch[1];
+    }
+
+    // Otherwise resolve the group via a search using the raw portal query string.
+    const session = await getUserSession();
+    const portalRestUrl = await getPortalRestUrl();
+    let groupId = '';
+    await searchGroups({
+        q: trimmed,
+        num: 1,
+        authentication: session,
+        portal: portalRestUrl,
+    })
+        .then((result) => {
+            if (result.results && result.results.length > 0) {
+                groupId = result.results[0].id ?? '';
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    return groupId;
+}
+
+/**
  * Find a portal group that has a certain tag.
  * @param tag portal tag
  */

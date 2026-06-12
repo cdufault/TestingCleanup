@@ -190,79 +190,37 @@ const EsriSymbolModal: React.FC<EsriSymbolModalProps> = (props) => {
      *  used useCallback here as this only needs to run if the entire component is rerendered.
      */
     const filterStylesToSymbols = useCallback(async () => {
-        const web2dTypes: any[] = [];
-        const web3dTypes: any[] = symbolItemType === 'pointSymbol' ? [{ value: 'Basic3D', label: 'Basic' }] : [];
-        const searchTermQuotes = '"web2d"'; // for portal default webstyles cases
-        const searchTerm = 'web2d'; // for published Pro WebStyles case
-        const isPointsSymbolLayer = symbolItemType === 'pointSymbol';
-        const isLineSymbolLayer = symbolItemType === 'lineSymbol';
-        const isPolygonSymbollayer = symbolItemType === 'polygonSymbol';
-        const matchesLayerSymbolType = (item: any): boolean => {
-            const isPointSymbolKeyword = item.typeKeywords?.some((keyword: string) => {
-                const normalizedKeyword = keyword.toLowerCase();
-                return normalizedKeyword === 'pointsymbol' || normalizedKeyword === '"pointsymbol"';
-            });
-            const isLineSymbolKeyword = item.typeKeywords?.some((keyword: string) => {
-                const normalizedKeyword = keyword.toLowerCase();
-                return normalizedKeyword === 'linesymbol' || normalizedKeyword === '"linesymbol"';
-            });
-            const isPolygonSymbolKeyword = item.typeKeywords?.some((keyword: string) => {
-                const normalizedKeyword = keyword.toLowerCase();
-                return normalizedKeyword === 'polygonsymbol' || normalizedKeyword === '"polygonsymbol"';
-            });
-            return (
-                (isPointsSymbolLayer && isPointSymbolKeyword) ||
-                (isLineSymbolLayer && isLineSymbolKeyword) ||
-                (isPolygonSymbollayer && isPolygonSymbolKeyword) ||
-                (!isPointsSymbolLayer && !isLineSymbolLayer && !isPolygonSymbollayer)
-            );
-        };
-        if (portalStyleItems2d) {
-            portalStyleItems2d.forEach((item) => {
-                if (item.title?.toLowerCase() === 'pins') {
-                    return;
+        const isPointLayer = symbolItemType === 'pointSymbol';
+        // The dropdown for the currently-selected markerType. Basic3D is only relevant for 3D points.
+        const types: SymbolSetType[] =
+            markerType === '3d' && isPointLayer ? [{ value: 'Basic3D', label: 'Basic' }] : [];
+
+        // The 2D vs 3D distinction is determined PER-SYMBOL via each style item's
+        // `dimensionality` field (see setSymbolDataByTypes), NOT by which portal group the
+        // item came from or by its item-level typeKeywords (e.g. `web2d`). Custom web styles
+        // published from ArcGIS Pro frequently carry keywords that don't match the simple
+        // 2D/3D bucketing, which previously caused them to be mis-categorized or dropped.
+        // We therefore consider items from both groups and let the per-symbol filter decide.
+        const combinedItems = [...(portalStyleItems2d ?? []), ...(portalStyleItems3d ?? [])];
+        const seenItemIds = new Set<string>();
+
+        for (const item of combinedItems) {
+            if (!item || seenItemIds.has(item.id)) {
+                continue;
+            }
+            seenItemIds.add(item.id);
+            if (item.title?.toLowerCase() === 'pins') {
+                continue;
+            }
+            const matchedSymbolCount = await setSymbolDataByTypes(item);
+            if (matchedSymbolCount > 0) {
+                const type = { value: item.title, label: item.title };
+                if (!types.some((existing) => existing.value === type.value)) {
+                    types.push(type);
                 }
-                const containsWeb2d = item.typeKeywords.some(
-                    (item: string) =>
-                        item.toLowerCase() === searchTerm.toLowerCase() ||
-                        item.toLowerCase() === searchTermQuotes.toLowerCase()
-                );
-                if (containsWeb2d && matchesLayerSymbolType(item)) {
-                    const web2dType = { value: item.title, label: item.title };
-                    if (!web2dTypes?.includes(web2dType)) {
-                        web2dTypes.push(web2dType);
-                    }
-                    setSymbolDataByTypes(item);
-                }
-            });
-            if (web2dTypes.length > 0 && markerType === '2d') {
-                const uniqueData2D = Array.from(new Set(web2dTypes));
-                setSymbolTypes(uniqueData2D);
             }
         }
-        if (portalStyleItems3d) {
-            portalStyleItems3d.forEach((item) => {
-                if (item.title?.toLowerCase() === 'pins') {
-                    return;
-                }
-                const containsWeb2d = item.typeKeywords.some(
-                    (item: string) =>
-                        item.toLowerCase() === searchTerm.toLowerCase() ||
-                        item.toLowerCase() === searchTermQuotes.toLowerCase()
-                );
-                if (!containsWeb2d && matchesLayerSymbolType(item)) {
-                    const web3dType = { value: item.title, label: item.title };
-                    if (!web3dTypes?.includes(web3dType)) {
-                        web3dTypes.push(web3dType);
-                    }
-                    setSymbolDataByTypes(item);
-                }
-            });
-            if (web3dTypes.length > 0 && markerType === '3d') {
-                const uniqueData3D = Array.from(new Set(web3dTypes));
-                setSymbolTypes(uniqueData3D);
-            }
-        }
+        setSymbolTypes(types);
     }, [portalStyleItems2d, portalStyleItems3d, markerType, symbolItemType]);
 
     /**
@@ -271,17 +229,33 @@ const EsriSymbolModal: React.FC<EsriSymbolModalProps> = (props) => {
      * 2D and 3D published web styles.
      * @param item
      */
-    async function setSymbolDataByTypes(item: any): Promise<void> {
+    async function setSymbolDataByTypes(item: any): Promise<number> {
         if (item) {
             if (item.title?.toLowerCase() === 'pins') {
-                return;
+                return 0;
             }
             const results = await getPortalItemData(item.id); //.then((results) => {
-            const portalItems = Array.from(new Set(results.items));
+            const portalItems = Array.from(new Set(results?.items ?? []));
             const updatedKey = item.title;
+
+            const matchesMarkerDimensionality = (symbol: any): boolean => {
+                const dimensionality = (symbol?.dimensionality ?? '').toString().toLowerCase();
+                // Esri web styles describe 2D symbols as 'flat' and 3D symbols as 'volumetric'.
+                // Some styles may instead use '2d'/'3d' directly. Map both conventions to the
+                // marker toggle. If a symbol omits dimensionality, include it rather than
+                // silently dropping it (e.g. older/custom Pro styles).
+                if (dimensionality === '') {
+                    return true;
+                }
+                if (markerType.toLowerCase() === '2d') {
+                    return dimensionality === 'flat' || dimensionality === '2d';
+                }
+                return dimensionality === 'volumetric' || dimensionality === '3d';
+            };
+
             const stratcomSymbolsMore = portalItems
                 ?.map((symbol: any) => {
-                    if (symbol.itemType === symbolItemType) {
+                    if (symbol.itemType === symbolItemType && matchesMarkerDimensionality(symbol)) {
                         // if there is a spaces in the name this fixes the href issue of not loading it properly
                         const thumbnailHref = symbol.thumbnail.href.replace(/ /g, '%20').replace(/^\.\//, '/');
                         const updatedSymbolHref = thumbnailHref.startsWith('http')
@@ -342,11 +316,15 @@ const EsriSymbolModal: React.FC<EsriSymbolModalProps> = (props) => {
                 })
                 .filter(Boolean);
 
-            setSymbolData((prevSymbolData) => ({
-                ...prevSymbolData,
-                [updatedKey]: stratcomSymbolsMore,
-            }));
+            if (stratcomSymbolsMore && stratcomSymbolsMore.length > 0) {
+                setSymbolData((prevSymbolData) => ({
+                    ...prevSymbolData,
+                    [updatedKey]: stratcomSymbolsMore,
+                }));
+            }
+            return stratcomSymbolsMore?.length ?? 0;
         }
+        return 0;
     }
 
     /**

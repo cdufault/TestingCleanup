@@ -2,6 +2,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import esriRequest from '@arcgis/core/request';
 import { getPortalRestUrl } from '../../../helpers/defaultPortalHelper';
+import { resolveGroupIdFromQuery } from '../../../helpers/portalGroupHelper';
 import RequestOptions = __esri.RequestOptions;
 import { SelectionType } from './helpers/GraphicsHelper';
 
@@ -47,19 +48,15 @@ const fetchStylesData = createAsyncThunk('webStyles/fetchStylesData', async () =
         } as RequestOptions;
         // Use esriRequest to fetch data from the web styles REST URL
         const stylesResponse = await esriRequest(webStylesUrl, options);
-        let threeDStylesGuid = '';
-        let twoDStylesGuid = '';
         const { data } = stylesResponse;
         const stylesGroupQuery = data.stylesGroupQuery;
         const twoDStylesGroupData = data['2DStylesGroupQuery'];
-        if (stylesGroupQuery) {
-            const parts = stylesGroupQuery.split(':');
-            threeDStylesGuid = parts.length === 2 ? parts[1].trim() : '';
-        }
-        if (twoDStylesGroupData) {
-            const twoDParts = twoDStylesGroupData.split(':');
-            twoDStylesGuid = twoDParts.length === 2 ? twoDParts[1].trim() : '';
-        }
+
+        // Resolve the actual group ids from the query strings. The portal returns these as
+        // group queries (e.g. `id:<guid>` or `title:"Esri Styles" AND owner:esri_en`), so we
+        // resolve them robustly rather than assuming a simple `key:value` shape.
+        const threeDStylesGuid = stylesGroupQuery ? await resolveGroupIdFromQuery(stylesGroupQuery) : '';
+        const twoDStylesGuid = twoDStylesGroupData ? await resolveGroupIdFromQuery(twoDStylesGroupData) : '';
 
         // Extract the relevant data and return it
         return {
